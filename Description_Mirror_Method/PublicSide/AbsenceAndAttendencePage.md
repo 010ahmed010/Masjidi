@@ -13,3 +13,5 @@ Intro: This page serves as a comprehensive history viewer for student absence an
 4. Attendance Display: Show a table or list of students with their attendance status. Include columns for student name, status (present/absent), and any notes (e.g., excused absence). Data is read automatically from the database set by teachers.
 
 5. Search/Filter Options: Add search functionality to find a specific student or filter by attendance status.
+
+Note: This page is accessible from the HomePage "Show all" button and displays detailed history from teacher-submitted attendance records.

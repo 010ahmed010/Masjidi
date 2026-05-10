@@ -13,3 +13,5 @@ Intro: This page displays the main picture of the masjid, an iframe for the masj
 4. Contact Details: On the left or remaining space, list basic contact information including WhatsApp, phone, and email, all configurable by the admin.
 
 5. Description: Include a short description that suits the project, explaining the contact purpose or masjid details.
+
+Note: This page is reached from the HomePage contact section and displays the full public contact details for visitors.
