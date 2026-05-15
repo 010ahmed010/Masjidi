@@ -6,7 +6,8 @@ A full-stack Masjid management system for teaching Quran and Islamic sciences. B
 ## Architecture
 - **Frontend**: React + Vite (port 5000) — `client/` directory
 - **Backend**: Express.js API (port 8000) — `server/` directory
-- **Database**: MongoDB (runs locally at port 27017, data stored in `/tmp/mongodb-data`)
+- **Database**: MongoDB Atlas (temporary dev connection — move to .env before production)
+  - URI: `mongodb+srv://myvibecoding10_db_user:KB3cVZ6XBOJJRC1u@cluster0.wd8mbrw.mongodb.net/?appName=Cluster0`
 - **Language**: Arabic only, RTL layout, Cairo/Amiri fonts
 
 ## Three Sides

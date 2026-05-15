@@ -35,7 +35,7 @@ app.use('/api/certificates', certificateRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/lessons', lessonRoutes);
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/masjidy';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://myvibecoding10_db_user:KB3cVZ6XBOJJRC1u@cluster0.wd8mbrw.mongodb.net/?appName=Cluster0';
 const PORT = process.env.PORT || 8000;
 
 mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 15000 })
