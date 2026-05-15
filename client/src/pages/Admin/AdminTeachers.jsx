@@ -5,34 +5,58 @@ export default function AdminTeachers() {
   const [teachers, setTeachers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', whatsapp: '' });
+  const [form, setForm] = useState({ name: '', username: '', password: '', phone: '', whatsapp: '' });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => { fetchTeachers(); }, []);
   const fetchTeachers = () => axios.get('/api/teachers').then(r => setTeachers(r.data)).catch(() => {});
 
-  const openAdd = () => { setEditing(null); setForm({ name: '', email: '', password: '', phone: '', whatsapp: '' }); setShowModal(true); };
-  const openEdit = (t) => { setEditing(t); setForm({ name: t.name, email: t.email, password: '', phone: t.phone || '', whatsapp: t.whatsapp || '' }); setShowModal(true); };
+  const openAdd = () => {
+    setEditing(null);
+    setForm({ name: '', username: '', password: '', phone: '', whatsapp: '' });
+    setShowModal(true);
+  };
+
+  const openEdit = (t) => {
+    setEditing(t);
+    setForm({ name: t.name, username: t.username || '', password: '', phone: t.phone || '', whatsapp: t.whatsapp || '' });
+    setShowModal(true);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); setLoading(true);
+    e.preventDefault();
+    setLoading(true);
     try {
       if (editing) await axios.put(`/api/teachers/${editing._id}`, form);
       else await axios.post('/api/teachers', form);
-      setShowModal(false); fetchTeachers();
-    } catch (err) { alert(err.response?.data?.message || 'حدث خطأ'); }
+      setShowModal(false);
+      fetchTeachers();
+    } catch (err) {
+      alert(err.response?.data?.message || 'حدث خطأ');
+    }
     setLoading(false);
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('هل أنت متأكد؟')) return;
-    await axios.delete(`/api/teachers/${id}`); fetchTeachers();
+    if (!confirm('هل أنت متأكد من حذف هذا المعلم؟')) return;
+    await axios.delete(`/api/teachers/${id}`);
+    fetchTeachers();
   };
+
+  const fields = [
+    { key: 'name',     label: 'الاسم الكامل',   type: 'text',     required: true },
+    { key: 'username', label: 'اسم المستخدم',   type: 'text',     required: true },
+    { key: 'password', label: editing ? 'كلمة المرور (اتركها فارغة للإبقاء)' : 'كلمة المرور', type: 'password', required: !editing },
+    { key: 'phone',    label: 'رقم الهاتف',      type: 'text',     required: false },
+    { key: 'whatsapp', label: 'رقم الواتساب',    type: 'text',     required: false },
+  ];
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="text-2xl font-bold text-gray-800"><i className="fas fa-chalkboard-teacher text-primary-600 ml-2"></i>إدارة المعلمين</h1>
+        <h1 className="text-2xl font-bold text-gray-800">
+          <i className="fas fa-chalkboard-teacher text-primary-600 ml-2"></i>إدارة المعلمين
+        </h1>
         <button onClick={openAdd} className="bg-primary-700 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-primary-800 text-sm">
           <i className="fas fa-plus ml-1"></i>إضافة معلم
         </button>
@@ -47,17 +71,23 @@ export default function AdminTeachers() {
               </div>
               <div>
                 <h3 className="font-bold text-gray-800">{t.name}</h3>
-                <p className="text-sm text-gray-500">{t.email}</p>
+                <p className="text-sm text-primary-600 font-medium">
+                  <i className="fas fa-user-tag ml-1 text-xs"></i>{t.username}
+                </p>
               </div>
             </div>
-            {t.phone && <p className="text-sm text-gray-600 mb-1"><i className="fas fa-phone text-primary-600 ml-2"></i>{t.phone}</p>}
+            {t.phone && (
+              <p className="text-sm text-gray-600 mb-1">
+                <i className="fas fa-phone text-primary-600 ml-2"></i>{t.phone}
+              </p>
+            )}
             {t.assignedClasses?.length > 0 && (
               <p className="text-sm text-gray-600 mb-3">
                 <i className="fas fa-school text-primary-600 ml-2"></i>
                 {t.assignedClasses.map(c => c.name).join('، ')}
               </p>
             )}
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-3">
               <button onClick={() => openEdit(t)} className="flex-1 text-blue-600 border border-blue-200 rounded-lg py-1.5 text-xs font-semibold hover:bg-blue-50">
                 <i className="fas fa-edit ml-1"></i>تعديل
               </button>
@@ -67,26 +97,47 @@ export default function AdminTeachers() {
             </div>
           </div>
         ))}
-        {teachers.length === 0 && <div className="col-span-3 text-center py-12 text-gray-400 bg-white rounded-2xl shadow-md"><i className="fas fa-chalkboard-teacher text-5xl mb-3"></i><p>لا توجد معلمون بعد</p></div>}
+        {teachers.length === 0 && (
+          <div className="col-span-3 text-center py-12 text-gray-400 bg-white rounded-2xl shadow-md">
+            <i className="fas fa-chalkboard-teacher text-5xl mb-3"></i>
+            <p>لا يوجد معلمون بعد</p>
+          </div>
+        )}
       </div>
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
             <div className="p-6 border-b flex items-center justify-between">
-              <h2 className="font-bold text-lg">{editing ? 'تعديل معلم' : 'إضافة معلم جديد'}</h2>
-              <button onClick={() => setShowModal(false)}><i className="fas fa-times text-gray-400"></i></button>
+              <h2 className="font-bold text-lg">
+                <i className={`fas ${editing ? 'fa-edit' : 'fa-user-plus'} text-primary-600 ml-2`}></i>
+                {editing ? 'تعديل معلم' : 'إضافة معلم جديد'}
+              </h2>
+              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
+                <i className="fas fa-times"></i>
+              </button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {[['name','الاسم','text',true],['email','البريد الإلكتروني','email',true],['password',editing?'كلمة المرور (اتركها فارغة للإبقاء)':'كلمة المرور','password',!editing],['phone','رقم الهاتف','text',false],['whatsapp','رقم الواتساب','text',false]].map(([k,l,t,req]) => (
-                <div key={k}>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">{l}</label>
-                  <input type={t} required={req} value={form[k]} onChange={e => setForm({...form,[k]:e.target.value})} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+              {fields.map(({ key, label, type, required }) => (
+                <div key={key}>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">{label}</label>
+                  <input
+                    type={type}
+                    required={required}
+                    value={form[key]}
+                    onChange={e => setForm({ ...form, [key]: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm text-right"
+                    placeholder={label}
+                  />
                 </div>
               ))}
               <div className="flex gap-3 pt-2">
-                <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
-                <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl font-bold">إلغاء</button>
+                <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">
+                  {loading ? <><i className="fas fa-spinner fa-spin ml-1"></i>جاري الحفظ...</> : 'حفظ'}
+                </button>
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl font-bold hover:bg-gray-200">
+                  إلغاء
+                </button>
               </div>
             </form>
           </div>
