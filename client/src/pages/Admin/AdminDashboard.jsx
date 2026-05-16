@@ -19,7 +19,7 @@ const navItems = [
   { path: '', icon: 'fas fa-tachometer-alt', label: 'الرئيسية' },
   { path: 'students', icon: 'fas fa-user-graduate', label: 'الطلاب' },
   { path: 'teachers', icon: 'fas fa-chalkboard-teacher', label: 'المعلمون' },
-  { path: 'classes', icon: 'fas fa-school', label: 'الفصول' },
+  { path: 'classes', icon: 'fas fa-school', label: 'الصفوف' },
   { path: 'honors', icon: 'fas fa-award', label: 'الشرف' },
   { path: 'occasions', icon: 'fas fa-star-and-crescent', label: 'المناسبات' },
   { path: 'news', icon: 'fas fa-newspaper', label: 'الأخبار' },

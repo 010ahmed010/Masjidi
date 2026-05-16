@@ -38,9 +38,9 @@ export default function AdminAttendance() {
 
       <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-4 mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 dark:border dark:border-primary-900/40">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">الفصل</label>
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">الصف</label>
           <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className={inputCls}>
-            <option value="">-- كل الفصول --</option>
+            <option value="">-- كل الصفوف --</option>
             {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
           </select>
         </div>

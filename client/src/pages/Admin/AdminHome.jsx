@@ -27,7 +27,7 @@ export default function AdminHome() {
   const cards = [
     { icon: 'fas fa-user-graduate', label: 'الطلاب', value: stats.students, color: 'bg-blue-500', link: '/admin/students' },
     { icon: 'fas fa-chalkboard-teacher', label: 'المعلمون', value: stats.teachers, color: 'bg-primary-600', link: '/admin/teachers' },
-    { icon: 'fas fa-school', label: 'الفصول', value: stats.classes, color: 'bg-purple-500', link: '/admin/classes' },
+    { icon: 'fas fa-school', label: 'الصفوف', value: stats.classes, color: 'bg-purple-500', link: '/admin/classes' },
     { icon: 'fas fa-award', label: 'موافقات الشرف المعلقة', value: stats.pendingHonors, color: 'bg-gold-500', link: '/admin/honors' },
     { icon: 'fas fa-newspaper', label: 'الأخبار', value: stats.news, color: 'bg-orange-500', link: '/admin/news' },
   ];
@@ -54,13 +54,13 @@ export default function AdminHome() {
           مرحباً بك في لوحة التحكم
         </h2>
         <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-          يمكنك من هنا إدارة جميع جوانب المعهد — من إدارة الطلاب والمعلمين والفصول، إلى التحكم في محتوى الموقع العام مثل الأخبار والمناسبات ولوحة الشرف.
+          يمكنك من هنا إدارة جميع جوانب المعهد — من إدارة الطلاب والمعلمين والصفوف، إلى التحكم في محتوى الموقع العام مثل الأخبار والمناسبات ولوحة الشرف.
         </p>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl">
             <i className="fas fa-users text-blue-600 dark:text-blue-400 mb-2 text-lg"></i>
             <p className="font-semibold text-gray-700 dark:text-gray-200">إدارة المستخدمين</p>
-            <p className="text-gray-500 dark:text-gray-400">أضف الطلاب وعيّن المعلمين لفصولهم</p>
+            <p className="text-gray-500 dark:text-gray-400">أضف الطلاب وعيّن المعلمين لصفوفهم</p>
           </div>
           <div className="bg-primary-50 dark:bg-primary-900/30 p-4 rounded-xl">
             <i className="fas fa-globe text-primary-600 dark:text-primary-400 mb-2 text-lg"></i>
