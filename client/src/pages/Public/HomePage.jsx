@@ -40,19 +40,19 @@ export default function HomePage() {
             <i className="fas fa-star text-gold-400"></i>
             <span>معهد متخصص في تعليم القرآن الكريم</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
             مرحباً بكم في
             <span className="text-gold-400 block mt-2">مسجدي</span>
           </h1>
-          <p className="text-xl md:text-2xl text-primary-100 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base sm:text-xl md:text-2xl text-primary-100 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
             معهد متخصص في تعليم الأطفال والطلاب القرآن الكريم وعلوم السنة النبوية والعلوم الإسلامية
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a href="#courses" className="bg-gold-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-gold-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center">
+            <a href="#courses" className="bg-gold-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-gold-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               <i className="fas fa-graduation-cap ml-2"></i>
               استعرض الدورات
             </a>
-            <Link to="/contact" className="bg-white/20 backdrop-blur text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-all border border-white/30">
+            <Link to="/contact" className="bg-white/20 backdrop-blur text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-white/30 transition-all border border-white/30">
               <i className="fas fa-phone ml-2"></i>
               تواصل معنا
             </Link>
@@ -67,7 +67,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="text-primary-600 font-semibold text-sm uppercase tracking-wider">من نحن</span>
-              <h2 className="text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2 mb-5">معهد مسجدي للعلوم الإسلامية</h2>
+              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2 mb-5">معهد مسجدي للعلوم الإسلامية</h2>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-5">
                 مسجدي معهد تعليمي متخصص في تعليم الأطفال والطلاب القرآن الكريم بأحكام التجويد، والحديث النبوي الشريف، والفقه الإسلامي، والسيرة النبوية، وسائر العلوم الإسلامية.
               </p>
@@ -99,7 +99,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <span className="text-primary-600 font-semibold text-sm">ما نقدمه</span>
-            <h2 className="text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">الدورات المتاحة</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">الدورات المتاحة</h2>
             <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
           </div>
           {(() => {
@@ -153,7 +153,7 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-10">
               <span className="text-primary-600 font-semibold text-sm">آخر الأخبار</span>
-              <h2 className="text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">الأخبار والإعلانات</h2>
+              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">الأخبار والإعلانات</h2>
               <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -180,7 +180,7 @@ export default function HomePage() {
           {/* Section header */}
           <div className="py-16 px-4 text-center">
             <span className="text-primary-600 font-semibold text-sm">المناسبات</span>
-            <h2 className="text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">المناسبات الإسلامية</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">المناسبات الإسلامية</h2>
             <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
           </div>
 
@@ -215,17 +215,17 @@ export default function HomePage() {
 
                 <div className="absolute top-6 bottom-6 right-0 w-1 bg-gradient-to-b from-transparent via-gold-500 to-transparent rounded-full"></div>
 
-                <div className="relative z-10 flex items-center min-h-[320px] pr-10 pl-6 md:pr-16">
+                <div className="relative z-10 flex items-center min-h-[280px] sm:min-h-[320px] pr-5 pl-4 sm:pr-10 md:pr-16">
                   <div className="max-w-lg w-full">
                     <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/50 text-gold-300 text-xs font-bold px-4 py-1.5 rounded-full mb-5">
                       <i className="fas fa-star-and-crescent text-gold-400 text-xs"></i>
                       <span>مناسبة إسلامية</span>
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 20px rgba(0,0,0,0.8)'}}>
+                    <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight" style={{textShadow: '0 2px 20px rgba(0,0,0,0.8)'}}>
                       {occ.title}
                     </h3>
                     {occ.description && (
-                      <p className="text-white/80 text-base md:text-lg leading-relaxed border-r-4 border-gold-500 pr-4 max-w-md" style={{textShadow: '0 1px 8px rgba(0,0,0,0.9)'}}>
+                      <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed border-r-4 border-gold-500 pr-4 max-w-md" style={{textShadow: '0 1px 8px rgba(0,0,0,0.9)'}}>
                         {occ.description}
                       </p>
                     )}
@@ -248,7 +248,7 @@ export default function HomePage() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-10">
               <span className="text-gold-600 font-semibold text-sm">المتميزون</span>
-              <h2 className="text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">لوحة الشرف</h2>
+              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">لوحة الشرف</h2>
               <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -313,8 +313,8 @@ export default function HomePage() {
       {/* Contact Section */}
       <section className="py-16 dark:bg-[#0d1a10]">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-primary-800 dark:bg-primary-950 dark:border dark:border-primary-800/60 rounded-3xl p-10 text-white text-center">
-            <h2 className="text-4xl font-bold mb-3">تواصل معنا</h2>
+          <div className="bg-primary-800 dark:bg-primary-950 dark:border dark:border-primary-800/60 rounded-3xl p-6 sm:p-10 text-white text-center">
+            <h2 className="text-2xl sm:text-4xl font-bold mb-3">تواصل معنا</h2>
             <p className="text-primary-200 mb-8">نسعد بالرد على استفساراتكم وتسجيل أبنائكم</p>
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               {contact.whatsapp && (

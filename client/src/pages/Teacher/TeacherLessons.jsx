@@ -48,7 +48,7 @@ export default function TeacherLessons() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6"><i className="fas fa-book-open text-primary-600 dark:text-primary-400 ml-2"></i>خطة الدروس الأسبوعية</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6"><i className="fas fa-book-open text-primary-600 dark:text-primary-400 ml-2"></i>خطة الدروس الأسبوعية</h1>
 
       <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-5 mb-6 dark:border dark:border-primary-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -97,7 +97,7 @@ export default function TeacherLessons() {
 
       {saved && <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 rounded-xl p-3 text-sm font-semibold mb-4"><i className="fas fa-check-circle ml-2"></i>تم حفظ خطة الدروس بنجاح!</div>}
 
-      <button onClick={handleSubmit} disabled={loading || !selectedClass} className="bg-primary-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">
+      <button onClick={handleSubmit} disabled={loading || !selectedClass} className="w-full sm:w-auto bg-primary-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">
         {loading ? <><i className="fas fa-spinner fa-spin ml-2"></i>جاري الحفظ...</> : <><i className="fas fa-save ml-2"></i>حفظ خطة الدروس</>}
       </button>
     </div>

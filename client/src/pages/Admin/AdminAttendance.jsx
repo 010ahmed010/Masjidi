@@ -34,7 +34,7 @@ export default function AdminAttendance() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6"><i className="fas fa-clipboard-check text-primary-600 dark:text-primary-400 ml-2"></i>مراقبة الحضور والغياب</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6"><i className="fas fa-clipboard-check text-primary-600 dark:text-primary-400 ml-2"></i>مراقبة الحضور والغياب</h1>
 
       <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-4 mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 dark:border dark:border-primary-900/40">
         <div>
