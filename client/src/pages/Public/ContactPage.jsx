@@ -11,7 +11,7 @@ export default function ContactPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0d1a10] transition-colors duration-300">
+    <div className="min-h-screen flex flex-col transition-colors duration-300">
       <Header />
       <main className="flex-1">
         <div className="gradient-islamic islamic-pattern py-16 text-center text-white">
