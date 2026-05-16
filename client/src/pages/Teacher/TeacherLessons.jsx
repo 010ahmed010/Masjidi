@@ -44,56 +44,58 @@ export default function TeacherLessons() {
     setSaved(true); setTimeout(() => setSaved(false), 3000); setLoading(false);
   };
 
+  const inputCls = "w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100";
+
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6"><i className="fas fa-book-open text-primary-600 ml-2"></i>خطة الدروس الأسبوعية</h1>
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6"><i className="fas fa-book-open text-primary-600 dark:text-primary-400 ml-2"></i>خطة الدروس الأسبوعية</h1>
 
-      <div className="bg-white rounded-2xl shadow-md p-5 mb-6">
+      <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-5 mb-6 dark:border dark:border-primary-900/40">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">الفصل</label>
-            <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">الفصل</label>
+            <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className={inputCls}>
               <option value="">-- اختر الفصل --</option>
               {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">بداية الأسبوع</label>
-            <input type="date" value={weekStart} onChange={e => setWeekStart(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">بداية الأسبوع</label>
+            <input type="date" value={weekStart} onChange={e => setWeekStart(e.target.value)} className={inputCls} />
           </div>
         </div>
       </div>
 
       <div className="space-y-3 mb-6">
         {days.map((d, i) => (
-          <div key={d.day} className="bg-white rounded-2xl shadow-md overflow-hidden">
-            <div className="px-5 py-3 bg-primary-50 border-b flex items-center gap-2">
-              <i className="fas fa-calendar-day text-primary-600"></i>
-              <span className="font-bold text-primary-800">{d.day}</span>
+          <div key={d.day} className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden dark:border dark:border-primary-900/40">
+            <div className="px-5 py-3 bg-primary-50 dark:bg-primary-900/30 border-b dark:border-primary-900/40 flex items-center gap-2">
+              <i className="fas fa-calendar-day text-primary-600 dark:text-primary-400"></i>
+              <span className="font-bold text-primary-800 dark:text-gray-100">{d.day}</span>
             </div>
             <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">الوقت</label>
-                <input type="time" value={d.time} onChange={e => updateDay(i, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" dir="ltr" />
+                <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">الوقت</label>
+                <input type="time" value={d.time} onChange={e => updateDay(i, 'time', e.target.value)} className={inputCls} dir="ltr" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">الدورة / المادة</label>
-                <input type="text" value={d.course} onChange={e => updateDay(i, 'course', e.target.value)} placeholder="مثال: القرآن الكريم" className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+                <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">الدورة / المادة</label>
+                <input type="text" value={d.course} onChange={e => updateDay(i, 'course', e.target.value)} placeholder="مثال: القرآن الكريم" className={inputCls} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">موضوع الدرس</label>
-                <input type="text" value={d.topic} onChange={e => updateDay(i, 'topic', e.target.value)} placeholder="موضوع الدرس لهذا اليوم..." className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+                <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">موضوع الدرس</label>
+                <input type="text" value={d.topic} onChange={e => updateDay(i, 'topic', e.target.value)} placeholder="موضوع الدرس لهذا اليوم..." className={inputCls} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">تفاصيل إضافية</label>
-                <input type="text" value={d.description} onChange={e => updateDay(i, 'description', e.target.value)} placeholder="ملاحظات أو تفاصيل..." className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+                <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">تفاصيل إضافية</label>
+                <input type="text" value={d.description} onChange={e => updateDay(i, 'description', e.target.value)} placeholder="ملاحظات أو تفاصيل..." className={inputCls} />
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {saved && <div className="bg-green-50 border border-green-200 text-green-700 rounded-xl p-3 text-sm font-semibold mb-4"><i className="fas fa-check-circle ml-2"></i>تم حفظ خطة الدروس بنجاح!</div>}
+      {saved && <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 rounded-xl p-3 text-sm font-semibold mb-4"><i className="fas fa-check-circle ml-2"></i>تم حفظ خطة الدروس بنجاح!</div>}
 
       <button onClick={handleSubmit} disabled={loading || !selectedClass} className="bg-primary-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">
         {loading ? <><i className="fas fa-spinner fa-spin ml-2"></i>جاري الحفظ...</> : <><i className="fas fa-save ml-2"></i>حفظ خطة الدروس</>}

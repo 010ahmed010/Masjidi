@@ -11,9 +11,7 @@ export default function AdminStudents() {
   const [form, setForm] = useState({ name: '', age: '', phone: '', whatsapp: '', guardianName: '', guardianPhone: '', assignedClass: '', assignedTeacher: '', status: 'active' });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchAll();
-  }, []);
+  useEffect(() => { fetchAll(); }, []);
 
   const fetchAll = async () => {
     const [s, c, t] = await Promise.allSettled([
@@ -46,84 +44,87 @@ export default function AdminStudents() {
 
   const filtered = students.filter(s => !search || s.name.includes(search));
 
+  const inputCls = "w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100";
+  const labelCls = "block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1";
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="text-2xl font-bold text-gray-800"><i className="fas fa-user-graduate text-primary-600 ml-2"></i>إدارة الطلاب</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100"><i className="fas fa-user-graduate text-primary-600 dark:text-primary-400 ml-2"></i>إدارة الطلاب</h1>
         <button onClick={openAdd} className="bg-primary-700 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-primary-800 text-sm">
           <i className="fas fa-plus ml-1"></i>إضافة طالب
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md mb-4 p-4">
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="البحث بالاسم..." className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+      <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 mb-4 p-4 dark:border dark:border-primary-900/40">
+        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="البحث بالاسم..." className={inputCls} />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+      <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden dark:border dark:border-primary-900/40">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b">
-              <tr>{['الاسم', 'العمر', 'الفصل', 'المعلم', 'الهاتف', 'الحالة', 'إجراءات'].map(h => <th key={h} className="text-right p-3 font-semibold text-gray-700">{h}</th>)}</tr>
+            <thead className="bg-gray-50 dark:bg-[#111f14] border-b dark:border-primary-900/40">
+              <tr>{['الاسم', 'العمر', 'الفصل', 'المعلم', 'الهاتف', 'الحالة', 'إجراءات'].map(h => <th key={h} className="text-right p-3 font-semibold text-gray-700 dark:text-gray-300">{h}</th>)}</tr>
             </thead>
             <tbody>
               {filtered.map(s => (
-                <tr key={s._id} className="border-t hover:bg-gray-50">
-                  <td className="p-3 font-semibold text-gray-800">{s.name}</td>
-                  <td className="p-3 text-gray-600">{s.age || '-'}</td>
-                  <td className="p-3 text-gray-600">{s.assignedClass?.name || '-'}</td>
-                  <td className="p-3 text-gray-600">{s.assignedTeacher?.name || '-'}</td>
-                  <td className="p-3 text-gray-600" dir="ltr">{s.phone || '-'}</td>
-                  <td className="p-3"><span className={`text-xs px-2 py-1 rounded-full font-bold ${s.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{s.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
+                <tr key={s._id} className="border-t dark:border-primary-900/40 hover:bg-gray-50 dark:hover:bg-primary-900/20">
+                  <td className="p-3 font-semibold text-gray-800 dark:text-gray-100">{s.name}</td>
+                  <td className="p-3 text-gray-600 dark:text-gray-300">{s.age || '-'}</td>
+                  <td className="p-3 text-gray-600 dark:text-gray-300">{s.assignedClass?.name || '-'}</td>
+                  <td className="p-3 text-gray-600 dark:text-gray-300">{s.assignedTeacher?.name || '-'}</td>
+                  <td className="p-3 text-gray-600 dark:text-gray-300" dir="ltr">{s.phone || '-'}</td>
+                  <td className="p-3"><span className={`text-xs px-2 py-1 rounded-full font-bold ${s.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400'}`}>{s.status === 'active' ? 'نشط' : 'غير نشط'}</span></td>
                   <td className="p-3 flex gap-2">
-                    <button onClick={() => openEdit(s)} className="text-blue-600 hover:text-blue-800 text-xs px-3 py-1 border border-blue-200 rounded-lg"><i className="fas fa-edit ml-1"></i>تعديل</button>
-                    <button onClick={() => handleDelete(s._id)} className="text-red-600 hover:text-red-800 text-xs px-3 py-1 border border-red-200 rounded-lg"><i className="fas fa-trash ml-1"></i>حذف</button>
+                    <button onClick={() => openEdit(s)} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 text-xs px-3 py-1 border border-blue-200 dark:border-blue-800 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"><i className="fas fa-edit ml-1"></i>تعديل</button>
+                    <button onClick={() => handleDelete(s._id)} className="text-red-600 dark:text-red-400 hover:text-red-800 text-xs px-3 py-1 border border-red-200 dark:border-red-800 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"><i className="fas fa-trash ml-1"></i>حذف</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {filtered.length === 0 && <div className="text-center py-8 text-gray-400">لا توجد نتائج</div>}
+          {filtered.length === 0 && <div className="text-center py-8 text-gray-400 dark:text-gray-500">لا توجد نتائج</div>}
         </div>
       </div>
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b flex items-center justify-between">
-              <h2 className="font-bold text-lg text-gray-800">{editing ? 'تعديل طالب' : 'إضافة طالب جديد'}</h2>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600"><i className="fas fa-times text-xl"></i></button>
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-lg max-h-[90vh] overflow-y-auto dark:border dark:border-primary-800/50">
+            <div className="p-6 border-b dark:border-primary-900/40 flex items-center justify-between">
+              <h2 className="font-bold text-lg text-gray-800 dark:text-gray-100">{editing ? 'تعديل طالب' : 'إضافة طالب جديد'}</h2>
+              <button onClick={() => setShowModal(false)} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"><i className="fas fa-times text-xl"></i></button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {[['name','الاسم الكامل','text',true],['age','العمر','number',false],['phone','رقم الهاتف','text',false],['whatsapp','رقم الواتساب','text',false],['guardianName','اسم ولي الأمر','text',false],['guardianPhone','هاتف ولي الأمر','text',false]].map(([k,l,t,req]) => (
                 <div key={k}>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">{l}</label>
-                  <input type={t} required={req} value={form[k]} onChange={e => setForm({...form,[k]:e.target.value})} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+                  <label className={labelCls}>{l}</label>
+                  <input type={t} required={req} value={form[k]} onChange={e => setForm({...form,[k]:e.target.value})} className={inputCls} />
                 </div>
               ))}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">الفصل</label>
-                <select value={form.assignedClass} onChange={e => setForm({...form, assignedClass: e.target.value})} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+                <label className={labelCls}>الفصل</label>
+                <select value={form.assignedClass} onChange={e => setForm({...form, assignedClass: e.target.value})} className={inputCls}>
                   <option value="">-- اختر الفصل --</option>
                   {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">المعلم</label>
-                <select value={form.assignedTeacher} onChange={e => setForm({...form, assignedTeacher: e.target.value})} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+                <label className={labelCls}>المعلم</label>
+                <select value={form.assignedTeacher} onChange={e => setForm({...form, assignedTeacher: e.target.value})} className={inputCls}>
                   <option value="">-- اختر المعلم --</option>
                   {teachers.map(t => <option key={t._id} value={t._id}>{t.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">الحالة</label>
-                <select value={form.status} onChange={e => setForm({...form, status: e.target.value})} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+                <label className={labelCls}>الحالة</label>
+                <select value={form.status} onChange={e => setForm({...form, status: e.target.value})} className={inputCls}>
                   <option value="active">نشط</option>
                   <option value="inactive">غير نشط</option>
                 </select>
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
-                <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl font-bold hover:bg-gray-200">إلغاء</button>
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 dark:bg-primary-900/40 text-gray-700 dark:text-gray-300 py-2.5 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-primary-800/50">إلغاء</button>
               </div>
             </form>
           </div>

@@ -35,8 +35,10 @@ export default function TeacherHonor() {
     setLoading(false);
   };
 
-  const statusColor = s => s === 'approved' ? 'bg-green-100 text-green-700' : s === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700';
+  const statusColor = s => s === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : s === 'rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
   const statusLabel = s => s === 'approved' ? 'موافق عليه' : s === 'rejected' ? 'مرفوض' : 'في الانتظار';
+
+  const nominationBg = s => s === 'approved' ? 'border-green-200 bg-green-50 dark:border-green-800/50 dark:bg-green-900/20' : s === 'rejected' ? 'border-red-200 bg-red-50 dark:border-red-800/50 dark:bg-red-900/20' : 'border-yellow-200 bg-yellow-50 dark:border-yellow-800/50 dark:bg-yellow-900/20';
 
   const getWeekStart = () => {
     const d = new Date();
@@ -45,36 +47,39 @@ export default function TeacherHonor() {
     return new Date(d.setDate(diff));
   };
 
+  const inputCls = "w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100";
+  const labelCls = "block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1";
+
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6"><i className="fas fa-award text-gold-500 ml-2"></i>ترشيح الطلاب المتميزين</h1>
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6"><i className="fas fa-award text-gold-500 ml-2"></i>ترشيح الطلاب المتميزين</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <div className="bg-white rounded-2xl shadow-md p-6">
-            <h2 className="font-bold text-gray-800 text-lg mb-4"><i className="fas fa-star text-gold-500 ml-2"></i>ترشيح طالب متميز للأسبوع</h2>
-            <p className="text-sm text-gray-500 mb-4">أسبوع: {getWeekStart().toLocaleDateString('ar-SA')} وما بعده</p>
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-6 dark:border dark:border-primary-900/40">
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 text-lg mb-4"><i className="fas fa-star text-gold-500 ml-2"></i>ترشيح طالب متميز للأسبوع</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">أسبوع: {getWeekStart().toLocaleDateString('ar-SA')} وما بعده</p>
 
-            {saved && <div className="bg-green-50 border border-green-200 text-green-700 rounded-xl p-3 text-sm font-semibold mb-4"><i className="fas fa-check-circle ml-2"></i>تم الترشيح بنجاح! ينتظر موافقة المدير.</div>}
+            {saved && <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 rounded-xl p-3 text-sm font-semibold mb-4"><i className="fas fa-check-circle ml-2"></i>تم الترشيح بنجاح! ينتظر موافقة المدير.</div>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">الفصل</label>
-                <select required value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm">
+                <label className={labelCls}>الفصل</label>
+                <select required value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className={inputCls}>
                   <option value="">-- اختر الفصل --</option>
                   {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">الطالب المتميز</label>
-                <select required value={selectedStudent} onChange={e => setSelectedStudent(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" disabled={!selectedClass}>
+                <label className={labelCls}>الطالب المتميز</label>
+                <select required value={selectedStudent} onChange={e => setSelectedStudent(e.target.value)} className={inputCls} disabled={!selectedClass}>
                   <option value="">-- اختر الطالب --</option>
                   {students.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">سبب الترشيح</label>
-                <textarea rows={3} required value={reason} onChange={e => setReason(e.target.value)} placeholder="اذكر سبب تميز هذا الطالب..." className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm resize-none"></textarea>
+                <label className={labelCls}>سبب الترشيح</label>
+                <textarea rows={3} required value={reason} onChange={e => setReason(e.target.value)} placeholder="اذكر سبب تميز هذا الطالب..." className={inputCls + " resize-none"}></textarea>
               </div>
               <button type="submit" disabled={loading} className="w-full bg-gold-500 text-white py-3 rounded-xl font-bold hover:bg-gold-600 disabled:opacity-60">
                 {loading ? <><i className="fas fa-spinner fa-spin ml-2"></i>جاري الإرسال...</> : <><i className="fas fa-award ml-2"></i>إرسال الترشيح</>}
@@ -84,21 +89,21 @@ export default function TeacherHonor() {
         </div>
 
         <div>
-          <div className="bg-white rounded-2xl shadow-md p-6">
-            <h2 className="font-bold text-gray-800 text-lg mb-4"><i className="fas fa-list text-primary-600 ml-2"></i>ترشيحاتي السابقة</h2>
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-6 dark:border dark:border-primary-900/40">
+            <h2 className="font-bold text-gray-800 dark:text-gray-100 text-lg mb-4"><i className="fas fa-list text-primary-600 dark:text-primary-400 ml-2"></i>ترشيحاتي السابقة</h2>
             <div className="space-y-3">
               {myNominations.map(h => (
-                <div key={h._id} className={`border rounded-xl p-4 ${h.status === 'approved' ? 'border-green-200 bg-green-50' : h.status === 'rejected' ? 'border-red-200 bg-red-50' : 'border-yellow-200 bg-yellow-50'}`}>
+                <div key={h._id} className={`border rounded-xl p-4 ${nominationBg(h.status)}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-gray-800">{h.student?.name}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-100">{h.student?.name}</span>
                     <span className={`text-xs px-2 py-1 rounded-full font-bold ${statusColor(h.status)}`}>{statusLabel(h.status)}</span>
                   </div>
-                  <p className="text-xs text-gray-500 mb-1">{h.class?.name}</p>
-                  {h.reason && <p className="text-sm text-gray-600 italic">"{h.reason}"</p>}
-                  <p className="text-xs text-gray-400 mt-2">{new Date(h.createdAt).toLocaleDateString('ar-SA')}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{h.class?.name}</p>
+                  {h.reason && <p className="text-sm text-gray-600 dark:text-gray-300 italic">"{h.reason}"</p>}
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">{new Date(h.createdAt).toLocaleDateString('ar-SA')}</p>
                 </div>
               ))}
-              {myNominations.length === 0 && <div className="text-center py-8 text-gray-400"><i className="fas fa-award text-4xl mb-2"></i><p>لا توجد ترشيحات بعد</p></div>}
+              {myNominations.length === 0 && <div className="text-center py-8 text-gray-400 dark:text-gray-500"><i className="fas fa-award text-4xl mb-2"></i><p>لا توجد ترشيحات بعد</p></div>}
             </div>
           </div>
         </div>
