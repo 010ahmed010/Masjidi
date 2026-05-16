@@ -160,20 +160,95 @@ export default function HomePage() {
 
       {/* Occasions */}
       {occasions.length > 0 && (
-        <section className="py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-10">
-              <span className="text-primary-600 font-semibold text-sm">المناسبات</span>
-              <h2 className="text-4xl font-bold text-primary-900 mt-2">المناسبات الإسلامية</h2>
-              <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
+        <section className="py-20 bg-gradient-to-b from-primary-950 to-primary-900 relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+            <i className="fas fa-mosque absolute text-white/5 text-[300px] -top-10 -right-16 rotate-6"></i>
+            <i className="fas fa-star-and-crescent absolute text-white/5 text-[200px] bottom-10 -left-10 -rotate-12"></i>
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent"></div>
+          </div>
+
+          <div className="relative z-10">
+            {/* Section header */}
+            <div className="text-center mb-14 px-4">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <div className="w-8 h-px bg-gold-500"></div>
+                <i className="fas fa-star-and-crescent text-gold-400 text-xl"></i>
+                <div className="w-8 h-px bg-gold-500"></div>
+              </div>
+              <span className="block text-gold-400 font-semibold text-sm tracking-widest uppercase mb-2">مناسباتنا</span>
+              <h2 className="text-5xl font-bold text-white mb-4">المناسبات الإسلامية</h2>
+              <p className="text-primary-300 text-lg max-w-xl mx-auto">نحتفي بالمناسبات الإسلامية ونشاركها مع طلابنا وأسرهم الكرام</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {occasions.map(occ => (
-                <div key={occ._id} className="bg-gradient-to-br from-primary-700 to-primary-900 text-white rounded-2xl p-6 card-hover">
-                  {occ.image && <img src={occ.image} alt={occ.title} className="w-full h-40 object-cover rounded-xl mb-4" />}
-                  {!occ.image && <div className="flex justify-center mb-4"><i className="fas fa-star-and-crescent text-4xl text-gold-400"></i></div>}
-                  <h3 className="font-bold text-xl text-gold-300 mb-2">{occ.title}</h3>
-                  {occ.description && <p className="text-primary-200 text-sm">{occ.description}</p>}
+
+            {/* Full-width occasions */}
+            <div className="space-y-0">
+              {occasions.map((occ, idx) => (
+                <div
+                  key={occ._id}
+                  className="relative w-full overflow-hidden group"
+                  style={{ minHeight: '340px' }}
+                >
+                  {/* Background image or gradient */}
+                  {occ.image ? (
+                    <>
+                      <img
+                        src={occ.image}
+                        alt={occ.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className={`absolute inset-0 ${idx % 2 === 0 ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-primary-950/95 via-primary-900/80 to-transparent`}></div>
+                    </>
+                  ) : (
+                    <div className={`absolute inset-0 ${idx % 2 === 0
+                      ? 'bg-gradient-to-l from-primary-800 via-primary-700 to-primary-600'
+                      : 'bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600'
+                    }`}>
+                      <div className="absolute inset-0 opacity-10"
+                        style={{backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.04) 20px, rgba(255,255,255,.04) 40px)'}}
+                      ></div>
+                    </div>
+                  )}
+
+                  {/* Decorative crescent */}
+                  <div className={`absolute top-1/2 -translate-y-1/2 ${idx % 2 === 0 ? 'left-10' : 'right-10'} text-white/10 text-[180px] leading-none pointer-events-none`}>
+                    <i className="fas fa-star-and-crescent"></i>
+                  </div>
+
+                  {/* Gold top border */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
+
+                  {/* Content */}
+                  <div className={`relative z-10 flex items-center min-h-[340px] px-8 md:px-20 ${idx % 2 === 0 ? '' : 'justify-end'}`}>
+                    <div className={`max-w-xl ${idx % 2 !== 0 ? 'text-left' : ''}`} dir="rtl">
+                      {/* Occasion number badge */}
+                      <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/40 text-gold-300 text-xs font-bold px-4 py-1.5 rounded-full mb-5 tracking-wider">
+                        <i className="fas fa-star-and-crescent text-gold-400"></i>
+                        <span>مناسبة إسلامية</span>
+                      </div>
+
+                      <h3 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight drop-shadow-lg">
+                        {occ.title}
+                      </h3>
+
+                      {occ.description && (
+                        <p className="text-primary-200 text-lg leading-relaxed max-w-lg border-r-4 border-gold-500 pr-4">
+                          {occ.description}
+                        </p>
+                      )}
+
+                      {/* Gold divider */}
+                      <div className="flex items-center gap-3 mt-6">
+                        <div className="w-12 h-0.5 bg-gold-500"></div>
+                        <i className="fas fa-mosque text-gold-500/60 text-sm"></i>
+                        <div className="w-12 h-0.5 bg-gold-500"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom separator */}
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-500/30 to-transparent"></div>
                 </div>
               ))}
             </div>

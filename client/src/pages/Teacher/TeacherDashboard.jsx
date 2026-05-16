@@ -28,7 +28,7 @@ export default function TeacherDashboard() {
       <aside className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-primary-800 text-white flex flex-col transition-all duration-300 flex-shrink-0`}>
         <div className="p-4 flex items-center gap-3 border-b border-primary-700">
           <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-            <i className="fas fa-chalkboard-teacher text-white text-sm"></i>
+            <i className="fas fa-mosque text-white text-sm"></i>
           </div>
           {sidebarOpen && <span className="font-bold text-lg truncate">مسجدي</span>}
         </div>
