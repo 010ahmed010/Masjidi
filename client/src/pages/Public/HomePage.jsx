@@ -160,23 +160,12 @@ export default function HomePage() {
 
       {/* Occasions */}
       {occasions.length > 0 && (
-        <section className="bg-primary-950" dir="rtl">
-          {/* Section header — dark so white text is readable */}
-          <div className="py-16 px-4 text-center relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-              <i className="fas fa-mosque absolute text-white/[0.03] text-[260px] -top-8 right-1/2 translate-x-1/2"></i>
-            </div>
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-3 mb-4">
-                <div className="w-10 h-px bg-gold-500"></div>
-                <i className="fas fa-star-and-crescent text-gold-400 text-2xl"></i>
-                <div className="w-10 h-px bg-gold-500"></div>
-              </div>
-              <span className="block text-gold-400 font-semibold text-sm tracking-widest mb-3">مناسباتنا</span>
-              <h2 className="text-5xl font-bold text-white mb-4">المناسبات الإسلامية</h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 mx-auto mb-4 rounded-full"></div>
-              <p className="text-primary-300 text-lg max-w-xl mx-auto">نحتفي بالمناسبات الإسلامية ونشاركها مع طلابنا وأسرهم الكرام</p>
-            </div>
+        <section dir="rtl">
+          {/* Section header — light background matching other sections */}
+          <div className="py-16 px-4 text-center">
+            <span className="text-primary-600 font-semibold text-sm">المناسبات</span>
+            <h2 className="text-4xl font-bold text-primary-900 mt-2">المناسبات الإسلامية</h2>
+            <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
           </div>
 
           {/* Occasions banners — full width, stacked with gap */}
