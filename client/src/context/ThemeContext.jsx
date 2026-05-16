@@ -1,0 +1,20 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+const ThemeContext = createContext();
+
+export function ThemeProvider({ children }) {
+  const [dark, setDark] = useState(() => localStorage.getItem('masjidy-theme') === 'dark');
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('masjidy-theme', dark ? 'dark' : 'light');
+  }, [dark]);
+
+  return (
+    <ThemeContext.Provider value={{ dark, toggleDark: () => setDark(d => !d) }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export const useTheme = () => useContext(ThemeContext);

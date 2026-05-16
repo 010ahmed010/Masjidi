@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 import HomePage from './pages/Public/HomePage';
 import AttendancePage from './pages/Public/AttendancePage';
@@ -12,7 +13,7 @@ import TeacherDashboard from './pages/Teacher/TeacherDashboard';
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="flex items-center justify-center h-screen"><div className="text-primary-600 text-xl">جاري التحميل...</div></div>;
+  if (loading) return <div className="flex items-center justify-center h-screen dark:bg-[#0d1a10]"><div className="text-primary-600 text-xl">جاري التحميل...</div></div>;
   if (!user) return <Navigate to="/login" />;
   if (role && user.role !== role) return <Navigate to="/" />;
   return children;
@@ -34,10 +35,12 @@ const AppRoutes = () => {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
