@@ -4,8 +4,12 @@ import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
 import logoDark from '../../assets/logo/MasjidiDarkMode.png';
+import { useTheme } from '../../context/ThemeContext';
+import bgLight from '../../assets/background/HeorLightMode.png';
+import bgDark from '../../assets/background/HeroDarkMode.png';
 
 export default function HomePage() {
+  const { dark } = useTheme();
   const [news, setNews] = useState([]);
   const [occasions, setOccasions] = useState([]);
   const [honors, setHonors] = useState([]);
@@ -87,10 +91,18 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative">
-              <div className="bg-primary-700 dark:bg-primary-900 rounded-3xl p-8 text-white text-center shadow-2xl dark:border dark:border-primary-700/50">
-                <i className="fas fa-mosque text-8xl text-white/30 mb-4"></i>
-                <p className="text-2xl font-bold text-gold-300 mb-2">﴿ خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ ﴾</p>
-                <p className="text-primary-200 text-sm">صحيح البخاري</p>
+              <div
+                className="rounded-3xl p-8 text-white text-center shadow-2xl overflow-hidden"
+                style={{
+                  backgroundImage: `url(${dark ? bgDark : bgLight})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="relative z-10 py-8">
+                  <p className="text-2xl font-bold text-gold-300 mb-2">﴿ خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ ﴾</p>
+                  <p className="text-white/70 text-sm">صحيح البخاري</p>
+                </div>
               </div>
             </div>
           </div>
