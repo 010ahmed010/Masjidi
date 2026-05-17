@@ -35,6 +35,7 @@ export default function AdminClasses() {
   const handleSubmit = async (e) => {
     e.preventDefault(); setLoading(true);
     const payload = { ...form, courses: form.courses.filter(c => c.name.trim()) };
+    if (!payload.teacher) delete payload.teacher;
     try {
       if (editing) await axios.put(`/api/classes/${editing._id}`, payload);
       else await axios.post('/api/classes', payload);
