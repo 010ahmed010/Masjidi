@@ -35,8 +35,13 @@ app.use('/api/certificates', certificateRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/lessons', lessonRoutes);
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://myvibecoding10_db_user:KB3cVZ6XBOJJRC1u@cluster0.wd8mbrw.mongodb.net/?appName=Cluster0';
+const MONGO_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT || 8000;
+
+if (!MONGO_URI) {
+  console.error('MONGO_URI environment variable is not set. Please add it to your secrets.');
+  process.exit(1);
+}
 
 mongoose.connect(MONGO_URI, { serverSelectionTimeoutMS: 15000 })
   .then(() => {
