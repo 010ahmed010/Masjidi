@@ -201,9 +201,11 @@ export default function HomePage() {
             {occasions.map((occ) => (
               <div
                 key={occ._id}
-                className="relative w-full rounded-2xl overflow-hidden group bg-black"
+                className="relative w-full rounded-2xl overflow-hidden group bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800/60 shadow-lg dark:shadow-primary-900/40"
                 style={{ minHeight: '320px' }}
               >
+                {/* Left gold accent */}
+                <div className="absolute top-6 bottom-6 left-0 w-1 bg-gradient-to-b from-transparent via-gold-500 to-transparent rounded-full z-20"></div>
                 {occ.image ? (
                   <>
                     <img
@@ -211,7 +213,7 @@ export default function HomePage() {
                       alt={occ.title}
                       className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/50 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-l from-primary-950/90 dark:from-black/90 via-primary-900/50 dark:via-black/50 to-transparent"></div>
                   </>
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900">
