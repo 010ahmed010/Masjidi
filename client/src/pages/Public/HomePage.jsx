@@ -201,7 +201,7 @@ export default function HomePage() {
             {occasions.map((occ) => (
               <div
                 key={occ._id}
-                className="relative w-full rounded-2xl overflow-hidden group"
+                className="relative w-full rounded-2xl overflow-hidden group bg-black"
                 style={{ minHeight: '320px' }}
               >
                 {occ.image ? (
@@ -209,9 +209,9 @@ export default function HomePage() {
                     <img
                       src={occ.image}
                       alt={occ.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/60 to-black/20"></div>
+                    <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/50 to-transparent"></div>
                   </>
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900">
