@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
+import logoDark from '../../assets/logo/MasjidiDarkMode.png';
 
 export default function HomePage() {
   const [news, setNews] = useState([]);
@@ -42,7 +43,9 @@ export default function HomePage() {
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
             مرحباً بكم في
-            <span className="text-gold-400 block mt-2">مسجدي</span>
+            <span className="block mt-4 flex justify-center">
+              <img src={logoDark} alt="مسجدي" className="h-16 sm:h-20 md:h-24 w-auto object-contain mx-auto" />
+            </span>
           </h1>
           <p className="text-base sm:text-xl md:text-2xl text-primary-100 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
             معهد متخصص في تعليم الأطفال والطلاب القرآن الكريم وعلوم السنة النبوية والعلوم الإسلامية

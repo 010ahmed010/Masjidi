@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import logoLight from '../assets/logo/MasjidiDLightMode.png';
+import logoDark from '../assets/logo/MasjidiDarkMode.png';
 
 export default function LoginPage() {
+  const { dark } = useTheme();
   const [form, setForm] = useState({ username: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -28,10 +32,7 @@ export default function LoginPage() {
     <div className="min-h-screen gradient-islamic islamic-pattern flex items-center justify-center px-4">
       <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 p-8 w-full max-w-md dark:border dark:border-primary-800/50">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i className="fas fa-mosque text-white text-2xl"></i>
-          </div>
-          <h1 className="text-3xl font-bold text-primary-800 dark:text-gray-100">مسجدي</h1>
+          <img src={dark ? logoDark : logoLight} alt="مسجدي" className="h-16 w-auto object-contain mx-auto mb-4" />
           <p className="text-gray-500 dark:text-gray-400 mt-2">تسجيل الدخول إلى لوحة التحكم</p>
         </div>
 

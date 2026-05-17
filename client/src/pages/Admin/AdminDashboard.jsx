@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
+import logoDark from '../../assets/logo/MasjidiDarkMode.png';
 
 import AdminHome from './AdminHome';
 import AdminStudents from './AdminStudents';
@@ -49,12 +50,9 @@ export default function AdminDashboard() {
         className="p-4 flex items-center gap-3 border-b border-primary-700 dark:border-primary-800 hover:bg-primary-800 dark:hover:bg-primary-900/80 transition-colors group"
         title="العودة للموقع"
       >
-        <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors">
-          <i className="fas fa-mosque text-white"></i>
-        </div>
+        <img src={logoDark} alt="مسجدي" className="h-9 w-auto object-contain flex-shrink-0" />
         {(mobile || sidebarOpen) && (
           <div className="overflow-hidden">
-            <span className="font-bold text-lg block truncate leading-tight">مسجدي</span>
             <span className="text-primary-300 text-xs flex items-center gap-1">
               <i className="fas fa-arrow-left text-[10px]"></i>
               العودة للموقع

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import logoDark from '../../assets/logo/MasjidiDarkMode.png';
 
 export default function Footer() {
   const [contact, setContact] = useState({});
@@ -16,11 +17,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                <i className="fas fa-mosque text-white text-lg"></i>
-              </div>
-              <span className="text-xl font-bold">{settings.siteName || 'مسجدي'}</span>
+            <div className="flex items-center mb-4">
+              <img src={logoDark} alt="مسجدي" className="h-10 w-auto object-contain" />
             </div>
             <p className="text-primary-200 text-sm leading-relaxed">
               {settings.siteDescription || 'معهد متخصص في تعليم القرآن الكريم والعلوم الإسلامية للأطفال والطلاب.'}
