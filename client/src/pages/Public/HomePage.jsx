@@ -4,6 +4,7 @@ import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
 import logoDark from '../../assets/logo/MasjidiDarkMode.png';
+import logoLight from '../../assets/logo/MasjidiDLightMode.png';
 import { useTheme } from '../../context/ThemeContext';
 import bgLight from '../../assets/background/HeorLightMode.png';
 import bgDark from '../../assets/background/HeroDarkMode.png';
@@ -223,8 +224,8 @@ export default function HomePage() {
                   </div>
                 )}
 
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none select-none" style={{ opacity: 0.12 }}>
-                  <img src={logoDark} alt="" className="h-24 w-auto object-contain" />
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none select-none" style={{ opacity: 0.15 }}>
+                  <img src={dark ? logoDark : logoLight} alt="" className="h-24 w-auto object-contain" />
                 </div>
 
                 <div className="absolute top-6 bottom-6 right-0 w-1 bg-gradient-to-b from-transparent via-gold-500 to-transparent rounded-full"></div>
