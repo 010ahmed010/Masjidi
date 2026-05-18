@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import HomePage from './pages/Public/HomePage';
 import AttendancePage from './pages/Public/AttendancePage';
 import ContactPage from './pages/Public/ContactPage';
+import DeveloperPage from './pages/Public/DeveloperPage';
 import LoginPage from './pages/LoginPage';
 
 import AdminDashboard from './pages/Admin/AdminDashboard';
@@ -26,6 +27,7 @@ const AppRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/attendance" element={<AttendancePage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/developer" element={<DeveloperPage />} />
       <Route path="/login" element={user ? <Navigate to={user.role === 'admin' ? '/admin' : '/teacher'} /> : <LoginPage />} />
       <Route path="/admin/*" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
       <Route path="/teacher/*" element={<ProtectedRoute role="teacher"><TeacherDashboard /></ProtectedRoute>} />

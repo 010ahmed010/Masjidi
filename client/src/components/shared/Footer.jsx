@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logoDark from '../../assets/logo/MasjidiDarkMode.png';
+import amjButton from '../../assets/DevAssets/AMJ-Button-Icon.png';
 
 export default function Footer() {
   const [contact, setContact] = useState({});
@@ -65,8 +66,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-primary-700 pt-4 text-center text-primary-300 text-sm">
+        <div className="border-t border-primary-700 pt-4 flex items-center justify-center gap-3 text-primary-300 text-sm flex-wrap">
           <p>{settings.footerText || `جميع الحقوق محفوظة © ${new Date().getFullYear()} مسجدي`}</p>
+          <Link
+            to="/developer"
+            title="صفحة المطور"
+            className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+          >
+            <img src={amjButton} alt="AMJ" className="h-7 w-auto object-contain rounded-lg" />
+          </Link>
         </div>
       </div>
     </footer>
