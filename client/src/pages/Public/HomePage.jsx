@@ -4,8 +4,13 @@ import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
 import logoDark from '../../assets/logo/MasjidiDarkMode.png';
+import logoLight from '../../assets/logo/MasjidiDLightMode.png';
+import { useTheme } from '../../context/ThemeContext';
+import bgLight from '../../assets/background/HeorLightMode.png';
+import bgDark from '../../assets/background/HeroDarkMode.png';
 
 export default function HomePage() {
+  const { dark } = useTheme();
   const [news, setNews] = useState([]);
   const [occasions, setOccasions] = useState([]);
   const [honors, setHonors] = useState([]);
@@ -86,11 +91,14 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="bg-primary-700 dark:bg-primary-900 rounded-3xl p-8 text-white text-center shadow-2xl dark:border dark:border-primary-700/50">
-                <i className="fas fa-mosque text-8xl text-white/30 mb-4"></i>
-                <p className="text-2xl font-bold text-gold-300 mb-2">﴿ خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ ﴾</p>
-                <p className="text-primary-200 text-sm">صحيح البخاري</p>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <img
+                src={dark ? bgDark : bgLight}
+                alt="مسجدي"
+                className="w-full h-auto block"
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 px-6">
+                <p className={`text-lg sm:text-2xl font-bold text-center ${dark ? 'text-gold-400' : 'text-primary-800'}`}>﴿ خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ ﴾</p>
               </div>
             </div>
           </div>
@@ -194,17 +202,19 @@ export default function HomePage() {
             {occasions.map((occ) => (
               <div
                 key={occ._id}
-                className="relative w-full rounded-2xl overflow-hidden group"
+                className="relative w-full rounded-2xl overflow-hidden group bg-primary-50 dark:bg-primary-950 border border-primary-200 dark:border-primary-800/60 shadow-lg dark:shadow-primary-900/40"
                 style={{ minHeight: '320px' }}
               >
+                {/* Left gold accent */}
+                <div className="absolute top-6 bottom-6 left-0 w-1 bg-gradient-to-b from-transparent via-gold-500 to-transparent rounded-full z-20"></div>
                 {occ.image ? (
                   <>
                     <img
                       src={occ.image}
                       alt={occ.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-l from-black/90 via-black/60 to-black/20"></div>
+                    <div className="absolute inset-0 bg-gradient-to-l from-primary-950/90 dark:from-black/90 via-primary-900/50 dark:via-black/50 to-transparent"></div>
                   </>
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900">
@@ -214,8 +224,8 @@ export default function HomePage() {
                   </div>
                 )}
 
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-white/10 text-[160px] leading-none pointer-events-none select-none">
-                  <i className="fas fa-star-and-crescent"></i>
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none select-none" style={{ opacity: 0.15 }}>
+                  <img src={dark ? logoDark : logoLight} alt="" className="h-24 w-auto object-contain" />
                 </div>
 
                 <div className="absolute top-6 bottom-6 right-0 w-1 bg-gradient-to-b from-transparent via-gold-500 to-transparent rounded-full"></div>
