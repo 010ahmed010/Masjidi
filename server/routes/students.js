@@ -23,6 +23,10 @@ router.get('/', authMiddleware, async (req, res) => {
 
 router.post('/', authMiddleware, adminOnly, async (req, res) => {
   try {
+    if (req.body.assignedClass) {
+      const cls = await Class.findById(req.body.assignedClass);
+      if (cls?.teacher) req.body.assignedTeacher = cls.teacher;
+    }
     const student = new Student(req.body);
     await student.save();
     if (req.body.assignedClass) {
@@ -37,6 +41,11 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
     const oldStudent = await Student.findById(req.params.id);
     const oldClassId = oldStudent?.assignedClass?.toString();
     const newClassId = req.body.assignedClass?.toString();
+
+    if (req.body.assignedClass) {
+      const cls = await Class.findById(req.body.assignedClass);
+      if (cls?.teacher) req.body.assignedTeacher = cls.teacher;
+    }
 
     const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
