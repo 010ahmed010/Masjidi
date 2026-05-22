@@ -91,8 +91,8 @@ export default function AdminTeachers() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md dark:border dark:border-primary-800/50">
-            <div className="p-6 border-b dark:border-primary-900/40 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md max-h-[90vh] flex flex-col dark:border dark:border-primary-800/50">
+            <div className="flex-shrink-0 px-5 py-4 border-b dark:border-primary-900/40 flex items-center justify-between rounded-t-2xl">
               <h2 className="font-bold text-lg text-gray-800 dark:text-gray-100">
                 <i className={`fas ${editing ? 'fa-edit' : 'fa-user-plus'} text-primary-600 dark:text-primary-400 ml-2`}></i>
                 {editing ? 'تعديل معلم' : 'إضافة معلم جديد'}
@@ -101,14 +101,26 @@ export default function AdminTeachers() {
                 <i className="fas fa-times"></i>
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {fields.map(({ key, label, type, required }) => (
-                <div key={key}>
-                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">{label}</label>
-                  <input type={type} required={required} value={form[key]} onChange={e => setForm({ ...form, [key]: e.target.value })} className={inputCls} placeholder={label} />
-                </div>
-              ))}
-              <div className="flex gap-3 pt-2">
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+                {fields.map(({ key, label, type, required }) => (
+                  <div key={key}>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                      {label}{required && <span className="text-red-500 mr-1">*</span>}
+                    </label>
+                    <input
+                      type={key === 'phone' || key === 'whatsapp' ? 'tel' : type}
+                      required={required}
+                      value={form[key]}
+                      onChange={e => setForm({ ...form, [key]: (key === 'phone' || key === 'whatsapp') ? e.target.value.replace(/[^\d+]/g, '') : e.target.value })}
+                      className={inputCls}
+                      placeholder={label}
+                      dir={key === 'phone' || key === 'whatsapp' ? 'ltr' : undefined}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex-shrink-0 px-5 py-4 border-t dark:border-primary-900/40 flex gap-3">
                 <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">
                   {loading ? <><i className="fas fa-spinner fa-spin ml-1"></i>جاري الحفظ...</> : 'حفظ'}
                 </button>

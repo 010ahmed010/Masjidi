@@ -67,33 +67,35 @@ export default function AdminNews() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md dark:border dark:border-primary-800/50">
-            <div className="p-6 border-b dark:border-primary-900/40 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md max-h-[90vh] flex flex-col dark:border dark:border-primary-800/50">
+            <div className="flex-shrink-0 px-5 py-4 border-b dark:border-primary-900/40 flex items-center justify-between rounded-t-2xl">
               <h2 className="font-bold text-lg text-gray-800 dark:text-gray-100">{editing ? 'تعديل' : 'إضافة خبر'}</h2>
               <button onClick={() => setShowModal(false)}><i className="fas fa-times text-gray-400 dark:text-gray-500"></i></button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className={labelCls}>العنوان</label>
-                <input type="text" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} className={inputCls} />
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+                <div>
+                  <label className={labelCls}>العنوان <span className="text-red-500">*</span></label>
+                  <input type="text" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} className={inputCls} />
+                </div>
+                <div>
+                  <label className={labelCls}>المحتوى</label>
+                  <textarea rows={4} value={form.content} onChange={e => setForm({...form, content: e.target.value})} className={inputCls + " resize-none"}></textarea>
+                </div>
+                <div>
+                  <label className={labelCls}>النوع</label>
+                  <select value={form.type} onChange={e => setForm({...form, type: e.target.value})} className={inputCls}>
+                    <option value="news">خبر</option>
+                    <option value="offer">عرض</option>
+                    <option value="announcement">إعلان</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input type="checkbox" id="pub" checked={form.published} onChange={e => setForm({...form, published: e.target.checked})} className="w-4 h-4 accent-primary-600" />
+                  <label htmlFor="pub" className={labelCls + " mb-0"}>نشر في الموقع</label>
+                </div>
               </div>
-              <div>
-                <label className={labelCls}>المحتوى</label>
-                <textarea rows={4} value={form.content} onChange={e => setForm({...form, content: e.target.value})} className={inputCls + " resize-none"}></textarea>
-              </div>
-              <div>
-                <label className={labelCls}>النوع</label>
-                <select value={form.type} onChange={e => setForm({...form, type: e.target.value})} className={inputCls}>
-                  <option value="news">خبر</option>
-                  <option value="offer">عرض</option>
-                  <option value="announcement">إعلان</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-3">
-                <input type="checkbox" id="pub" checked={form.published} onChange={e => setForm({...form, published: e.target.checked})} className="w-4 h-4 accent-primary-600" />
-                <label htmlFor="pub" className={labelCls + " mb-0"}>نشر في الموقع</label>
-              </div>
-              <div className="flex gap-3 pt-2">
+              <div className="flex-shrink-0 px-5 py-4 border-t dark:border-primary-900/40 flex gap-3">
                 <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
                 <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 dark:bg-primary-900/40 text-gray-700 dark:text-gray-300 py-2.5 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-primary-800/50">إلغاء</button>
               </div>

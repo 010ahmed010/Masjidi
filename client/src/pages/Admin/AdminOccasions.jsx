@@ -67,23 +67,25 @@ export default function AdminOccasions() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md dark:border dark:border-primary-800/50">
-            <div className="p-6 border-b dark:border-primary-900/40 flex items-center justify-between">
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:shadow-black/60 w-full max-w-md max-h-[90vh] flex flex-col dark:border dark:border-primary-800/50">
+            <div className="flex-shrink-0 px-5 py-4 border-b dark:border-primary-900/40 flex items-center justify-between rounded-t-2xl">
               <h2 className="font-bold text-lg text-gray-800 dark:text-gray-100">{editing ? 'تعديل مناسبة' : 'إضافة مناسبة'}</h2>
               <button onClick={() => setShowModal(false)}><i className="fas fa-times text-gray-400 dark:text-gray-500"></i></button>
             </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              {[['title','عنوان المناسبة',true],['description','الوصف',false],['image','رابط الصورة',false]].map(([k,l,req]) => (
-                <div key={k}>
-                  <label className={labelCls}>{l}</label>
-                  <input type="text" required={req} value={form[k]} onChange={e => setForm({...form,[k]:e.target.value})} className={inputCls} />
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+                {[['title','عنوان المناسبة',true],['description','الوصف',false],['image','رابط الصورة',false]].map(([k,l,req]) => (
+                  <div key={k}>
+                    <label className={labelCls}>{l}{req && <span className="text-red-500 mr-1">*</span>}</label>
+                    <input type="text" required={req} value={form[k]} onChange={e => setForm({...form,[k]:e.target.value})} className={inputCls} />
+                  </div>
+                ))}
+                <div className="flex items-center gap-3">
+                  <input type="checkbox" id="active" checked={form.active} onChange={e => setForm({...form, active: e.target.checked})} className="w-4 h-4 accent-primary-600" />
+                  <label htmlFor="active" className={labelCls + " mb-0"}>إظهار في الموقع</label>
                 </div>
-              ))}
-              <div className="flex items-center gap-3">
-                <input type="checkbox" id="active" checked={form.active} onChange={e => setForm({...form, active: e.target.checked})} className="w-4 h-4 accent-primary-600" />
-                <label htmlFor="active" className={labelCls + " mb-0"}>إظهار في الموقع</label>
               </div>
-              <div className="flex gap-3 pt-2">
+              <div className="flex-shrink-0 px-5 py-4 border-t dark:border-primary-900/40 flex gap-3">
                 <button type="submit" disabled={loading} className="flex-1 bg-primary-700 text-white py-2.5 rounded-xl font-bold hover:bg-primary-800 disabled:opacity-60">{loading ? 'جاري الحفظ...' : 'حفظ'}</button>
                 <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 dark:bg-primary-900/40 text-gray-700 dark:text-gray-300 py-2.5 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-primary-800/50">إلغاء</button>
               </div>
