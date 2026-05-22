@@ -17,7 +17,8 @@ export default function TeacherAttendance() {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`/api/classes?teacherId=${user.id}`).then(r => setClasses(r.data)).catch(() => {});
+    const teacherId = user._id || user.id;
+    axios.get(`/api/classes?teacherId=${teacherId}`).then(r => setClasses(r.data)).catch(() => {});
   }, [user]);
 
   useEffect(() => {

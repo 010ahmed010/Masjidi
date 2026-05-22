@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const Attendance = require('../models/Attendance');
 const { authMiddleware, teacherOnly } = require('../middleware/auth');
 
-router.get('/', authMiddleware, async (req, res) => {
+const JWT_SECRET = process.env.JWT_SECRET || 'masjidy_secret_key_2024';
+
+router.get('/', async (req, res) => {
   try {
-    const { classId, date, studentId } = req.query;
+    const { classId, date } = req.query;
     const filter = {};
     if (classId) filter.class = classId;
     if (date) {
@@ -14,7 +17,13 @@ router.get('/', authMiddleware, async (req, res) => {
       next.setDate(d.getDate() + 1);
       filter.date = { $gte: d, $lt: next };
     }
-    if (req.user.role === 'teacher') filter.teacher = req.user.id;
+    const token = req.headers.authorization?.split(' ')[1];
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (decoded.role === 'teacher') filter.teacher = decoded.id;
+      } catch {}
+    }
     const records = await Attendance.find(filter)
       .populate('class', 'name')
       .populate('teacher', 'name')
