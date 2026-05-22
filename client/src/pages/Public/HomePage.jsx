@@ -160,16 +160,16 @@ export default function HomePage() {
       </section>
 
       {/* Courses */}
-      <section id="courses" className="py-16 dark:bg-[#0d1a10]">
+      <section id="courses" className="py-20 bg-[#0f1f12] dark:bg-[#0a1509]">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <span className="text-primary-600 font-semibold text-sm">
+          <div className="text-center mb-12">
+            <span className="text-gold-400 font-semibold text-sm tracking-widest uppercase">
               ما نقدمه
             </span>
-            <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">
+            <h2 className="text-3xl sm:text-5xl font-bold text-white mt-3">
               الدورات المتاحة
             </h2>
-            <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
+            <div className="w-16 h-1 bg-gold-500 mx-auto mt-4"></div>
           </div>
           {(() => {
             const courseCards = [];
@@ -204,47 +204,53 @@ export default function HomePage() {
             });
             if (courseCards.length === 0)
               return (
-                <div className="text-center py-12 text-gray-400 dark:text-gray-500">
-                  <i className="fas fa-book-open text-5xl mb-3"></i>
-                  <p>لم تتم إضافة دورات بعد</p>
+                <div className="text-center py-16 text-gray-500">
+                  <i className="fas fa-book-open text-5xl mb-4 opacity-40"></i>
+                  <p className="text-lg">لم تتم إضافة دورات بعد</p>
                 </div>
               );
             return (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                 {courseCards.map((card) => (
                   <div
                     key={card.key}
-                    className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden card-hover dark:border dark:border-primary-900/40"
+                    className="group bg-[#1a2d1e] rounded-2xl overflow-hidden shadow-xl shadow-black/40 border border-primary-800/40 hover:border-gold-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/60"
                   >
-                    <div className="h-44 bg-gradient-to-br from-primary-600 to-primary-800 flex items-center justify-center">
+                    {/* Image */}
+                    <div className="relative h-52 overflow-hidden">
                       {card.courseImage ? (
                         <img
                           src={card.courseImage}
                           alt={card.courseName}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
-                        <i className="fas fa-book-quran text-white text-6xl opacity-60"></i>
+                        <div className="w-full h-full bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 flex items-center justify-center">
+                          <i className="fas fa-book-quran text-white text-7xl opacity-30"></i>
+                        </div>
                       )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1a2d1e] via-transparent to-transparent"></div>
                     </div>
-                    <div className="p-5">
-                      <h3 className="font-bold text-xl text-primary-800 dark:text-gray-100 mb-2">
+
+                    {/* Content */}
+                    <div className="px-5 pb-5 pt-3 text-center">
+                      <h3 className="font-bold text-2xl text-white mb-1 leading-tight">
                         {card.courseName}
                       </h3>
                       {card.description && (
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                        <p className="text-gray-400 text-sm mb-4 line-clamp-1">
                           {card.description}
                         </p>
                       )}
-                      <div className="pt-3 mt-3 border-t border-gray-100 dark:border-primary-900/40 space-y-1">
-                        <p className="text-sm font-bold text-primary-700 dark:text-primary-300">
-                          <i className="fas fa-school ml-1"></i>الصف:{" "}
-                          {card.className}
+                      <div className="mt-4 pt-4 border-t border-primary-800/50 space-y-2">
+                        <p className="text-sm font-bold text-primary-300">
+                          <i className="fas fa-school ml-2 text-primary-400"></i>
+                          الصف: <span className="text-primary-200">{card.className}</span>
                         </p>
                         {card.teacherName && (
-                          <p className="text-xs text-gray-400 dark:text-gray-500">
-                            <i className="fas fa-user ml-1"></i>المعلم:{" "}
-                            {card.teacherName}
+                          <p className="text-xs text-gray-500">
+                            <i className="fas fa-user ml-2"></i>
+                            المعلم: {card.teacherName}
                           </p>
                         )}
                       </div>
@@ -398,37 +404,61 @@ export default function HomePage() {
 
       {/* Honor */}
       {honors.length > 0 && (
-        <section className="py-16 bg-gradient-to-b from-gold-50 to-white dark:from-[#1a1500] dark:to-[#0d1a10]">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-10">
-              <span className="text-gold-600 font-semibold text-sm">
+        <section className="py-20 bg-[#0a1205] dark:bg-[#070e08] relative overflow-hidden">
+          {/* Decorative background glow */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gold-500/5 blur-3xl"></div>
+          </div>
+
+          <div className="max-w-6xl mx-auto px-4 relative z-10">
+            <div className="text-center mb-12">
+              <span className="text-gold-400 font-semibold text-sm tracking-widest uppercase">
                 المتميزون
               </span>
-              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">
+              <h2 className="text-3xl sm:text-5xl font-bold text-white mt-3">
                 لوحة الشرف
               </h2>
-              <div className="w-16 h-1 bg-gold-500 mx-auto mt-3"></div>
+              <div className="w-16 h-1 bg-gold-500 mx-auto mt-4"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {honors.map((h) => (
                 <div
                   key={h._id}
-                  className="bg-white dark:bg-[#1a2d1e] border-2 border-gold-200 dark:border-gold-900/60 rounded-2xl p-6 text-center card-hover shadow-md dark:shadow-black/30"
+                  className="group relative bg-[#111e13] border border-gold-800/40 hover:border-gold-500/70 rounded-2xl p-7 text-center transition-all duration-300 hover:-translate-y-1 shadow-xl shadow-black/50 hover:shadow-gold-900/20 overflow-hidden"
                 >
-                  <div className="w-16 h-16 bg-gold-100 dark:bg-gold-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-award text-gold-500 text-3xl"></i>
+                  {/* Corner glow */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gold-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-gold-500/10 transition-colors duration-300"></div>
+
+                  {/* Medal */}
+                  <div className="relative w-20 h-20 mx-auto mb-5">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold-600/30 to-gold-900/20 border border-gold-700/50 flex items-center justify-center group-hover:border-gold-500/80 transition-colors duration-300">
+                      <i className="fas fa-award text-gold-400 text-4xl group-hover:text-gold-300 transition-colors duration-300"></i>
+                    </div>
+                    <div className="absolute inset-0 rounded-full bg-gold-500/10 blur-md group-hover:bg-gold-500/20 transition-all duration-300"></div>
                   </div>
-                  <h3 className="font-bold text-xl text-primary-800 dark:text-gray-100 mb-1">
-                    {h.student?.name}
-                  </h3>
-                  {h.class?.name && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                      {h.class.name}
-                    </p>
+
+                  {/* Student name */}
+                  {h.student?.name && (
+                    <h3 className="font-bold text-xl text-white mb-1 leading-tight">
+                      {h.student.name}
+                    </h3>
                   )}
+
+                  {/* Class badge */}
+                  {h.class?.name && (
+                    <span className="inline-flex items-center gap-1 text-xs text-primary-300 bg-primary-900/40 border border-primary-800/50 px-3 py-1 rounded-full mb-4">
+                      <i className="fas fa-school text-primary-400 text-xs"></i>
+                      {h.class.name}
+                    </span>
+                  )}
+
+                  {/* Reason */}
                   {h.reason && (
-                    <p className="text-gray-600 dark:text-gray-300 text-sm italic">
-                      "{h.reason}"
+                    <p className="text-gray-400 text-sm italic leading-relaxed border-t border-gold-900/40 pt-4 mt-2">
+                      <i className="fas fa-quote-right text-gold-700 text-xs ml-1"></i>
+                      {h.reason}
+                      <i className="fas fa-quote-left text-gold-700 text-xs mr-1"></i>
                     </p>
                   )}
                 </div>
