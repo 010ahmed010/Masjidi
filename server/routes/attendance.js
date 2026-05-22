@@ -34,6 +34,28 @@ router.get('/latest', async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
+router.get('/today-summary', async (req, res) => {
+  try {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const end = new Date(start);
+    end.setDate(start.getDate() + 1);
+
+    const records = await Attendance.find({ date: { $gte: start, $lt: end } });
+
+    let present = 0, absent = 0, excused = 0;
+    records.forEach(att => {
+      att.records.forEach(r => {
+        if (r.status === 'present') present++;
+        else if (r.status === 'absent') absent++;
+        else if (r.status === 'excused') excused++;
+      });
+    });
+
+    res.json({ date: start, present, absent, excused, hasData: records.length > 0 });
+  } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
 router.post('/', authMiddleware, teacherOnly, async (req, res) => {
   try {
     const { classId, date, records } = req.body;

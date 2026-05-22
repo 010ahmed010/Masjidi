@@ -16,7 +16,7 @@ export default function HomePage() {
   const [honors, setHonors] = useState([]);
   const [classes, setClasses] = useState([]);
   const [contact, setContact] = useState({});
-  const [latestAttendance, setLatestAttendance] = useState(null);
+  const [todaySummary, setTodaySummary] = useState(null);
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
@@ -41,8 +41,8 @@ export default function HomePage() {
       .then((r) => setContact(r.data))
       .catch(() => {});
     axios
-      .get("/api/attendance/latest")
-      .then((r) => setLatestAttendance(r.data))
+      .get("/api/attendance/today-summary")
+      .then((r) => setTodaySummary(r.data))
       .catch(() => {});
     axios
       .get("/api/lessons/public")
@@ -447,7 +447,7 @@ export default function HomePage() {
                 الحضور
               </span>
               <h2 className="text-3xl font-bold text-primary-900 dark:text-gray-100 mt-1">
-                آخر سجل حضور
+                سجل حضور اليوم
               </h2>
             </div>
             <Link
@@ -458,22 +458,20 @@ export default function HomePage() {
               عرض الكل
             </Link>
           </div>
-          {latestAttendance ? (
+          {todaySummary && todaySummary.hasData ? (
             <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden dark:border dark:border-primary-900/40">
               <div className="p-4 bg-primary-50 dark:bg-primary-900/40 border-b dark:border-primary-900/50 flex items-center justify-between">
                 <span className="font-bold text-primary-800 dark:text-gray-100">
-                  {latestAttendance.class?.name}
+                  ملخص جميع الصفوف
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date(latestAttendance.date).toLocaleDateString("ar-SA")}
+                  {new Date(todaySummary.date).toLocaleDateString("ar-SA")}
                 </span>
               </div>
               <div className="p-4 grid grid-cols-3 gap-4 text-center">
                 <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4">
                   <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                    {latestAttendance.records?.filter(
-                      (r) => r.status === "present",
-                    ).length || 0}
+                    {todaySummary.present}
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     حاضر
@@ -481,9 +479,7 @@ export default function HomePage() {
                 </div>
                 <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4">
                   <p className="text-3xl font-bold text-red-600 dark:text-red-400">
-                    {latestAttendance.records?.filter(
-                      (r) => r.status === "absent",
-                    ).length || 0}
+                    {todaySummary.absent}
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     غائب
@@ -491,9 +487,7 @@ export default function HomePage() {
                 </div>
                 <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl p-4">
                   <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
-                    {latestAttendance.records?.filter(
-                      (r) => r.status === "excused",
-                    ).length || 0}
+                    {todaySummary.excused}
                   </p>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     معذور
@@ -504,7 +498,7 @@ export default function HomePage() {
           ) : (
             <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-12 text-center text-gray-400 dark:text-gray-500 dark:border dark:border-primary-900/40">
               <i className="fas fa-calendar-check text-5xl mb-3"></i>
-              <p>لا توجد سجلات حضور بعد</p>
+              <p>لم يتم تسجيل حضور لهذا اليوم بعد</p>
             </div>
           )}
         </div>

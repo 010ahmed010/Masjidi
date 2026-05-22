@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 
 export default function TeacherAttendance() {
+  const { user } = useAuth();
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -14,8 +16,9 @@ export default function TeacherAttendance() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    axios.get('/api/classes').then(r => setClasses(r.data)).catch(() => {});
-  }, []);
+    if (!user) return;
+    axios.get(`/api/classes?teacherId=${user.id}`).then(r => setClasses(r.data)).catch(() => {});
+  }, [user]);
 
   useEffect(() => {
     if (!selectedClass) { setStudents([]); setAttendance({}); setNotes({}); return; }
@@ -124,12 +127,15 @@ export default function TeacherAttendance() {
           <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden mb-4 dark:border dark:border-primary-900/40">
             <div className="p-4 bg-primary-50 dark:bg-primary-900/30 border-b dark:border-primary-900/40 flex items-center justify-between">
               <span className="font-bold text-primary-800 dark:text-gray-100">{filtered.length} طالب</span>
-              <div className="flex gap-3 text-xs">
+              <div className="flex gap-3 text-xs flex-wrap">
                 <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-full">
                   حاضر: {Object.values(attendance).filter(v => v === 'present').length}
                 </span>
                 <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 px-2 py-1 rounded-full">
                   غائب: {Object.values(attendance).filter(v => v === 'absent').length}
+                </span>
+                <span className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-2 py-1 rounded-full">
+                  معذور: {Object.values(attendance).filter(v => v === 'excused').length}
                 </span>
               </div>
             </div>
