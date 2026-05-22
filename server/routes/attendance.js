@@ -17,13 +17,6 @@ router.get('/', async (req, res) => {
       next.setDate(d.getDate() + 1);
       filter.date = { $gte: d, $lt: next };
     }
-    const token = req.headers.authorization?.split(' ')[1];
-    if (token) {
-      try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        if (decoded.role === 'teacher') filter.teacher = decoded.id;
-      } catch {}
-    }
     const records = await Attendance.find(filter)
       .populate('class', 'name')
       .populate('teacher', 'name')
