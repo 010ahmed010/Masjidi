@@ -2,7 +2,7 @@
 
 ## Admin Dashboard
 
-Intro: This page is the main admin control center for Masjidy. It manages public site content, teacher assignments, student records, attendance monitoring, honor approvals, and school settings. Admin actions directly affect the public HomePage and complete the teacher workflow.
+Intro: This page is the main admin control center for Masjidi. It manages public site content, teacher assignments, student records, attendance monitoring, honor approvals, and school settings. Admin actions directly affect the public HomePage and complete the teacher workflow.
 
 1. Dashboard Home: A summary page with key metrics and quick links.
    - Total students
@@ -82,4 +82,4 @@ Navigation suggestion:
 - Certificates
 - Settings
 
-This structure matches the public pages and teacher workflows from the existing Masjidy description files and ensures the admin can fully manage the site.
+This structure matches the public pages and teacher workflows from the existing Masjidi description files and ensures the admin can fully manage the site.

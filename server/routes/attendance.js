@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const Attendance = require('../models/Attendance');
 const { authMiddleware, teacherOnly } = require('../middleware/auth');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'masjidy_secret_key_2024';
+const JWT_SECRET = process.env.JWT_SECRET || 'masjidi_secret_key_2024';
 
 router.get('/', async (req, res) => {
   try {

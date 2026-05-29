@@ -1,13 +1,13 @@
 
-## Masjidy Home Page
+## Masjidi Home Page
 
 Intro: The home page consists of multiple sections.
 
-1. Header: The header must contain basic details like the Masjidy logo, navigation links, login button, and student registration status (open or closed) controlled by admin. It should be a reusable component.
+1. Header: The header must contain basic details like the Masjidi logo, navigation links, login button, and student registration status (open or closed) controlled by admin. It should be a reusable component.
 
 2. Hero: The hero section should use a traditional Arabic and Islamic design with a modern style.
 
-3. About/Bio: This section clearly explains the site. Masjidy is an institute dedicated to teaching kids and students Islamic sciences such as Quran and Sunnah.
+3. About/Bio: This section clearly explains the site. Masjidi is an institute dedicated to teaching kids and students Islamic sciences such as Quran and Sunnah.
 
 4. Available Courses: Admin sets the available courses taught by teachers and assigns images for each course. These course listings should correspond to teacher lesson plans and class assignments.
 

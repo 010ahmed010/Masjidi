@@ -1,7 +1,7 @@
 {
-  "name": "masjidy-server",
+  "name": "masjidi-server",
   "version": "1.0.0",
-  "description": "Masjidy Backend API",
+  "description": "Masjidi Backend API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

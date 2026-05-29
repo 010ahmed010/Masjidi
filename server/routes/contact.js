@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
       contact = new Contact({
         whatsapp: '+966500000000',
         phone: '+966500000000',
-        email: 'info@masjidy.com',
+        email: 'info@masjidi.com',
         description: 'مسجدي - معهد متخصص في تعليم القرآن الكريم والعلوم الإسلامية',
         address: 'المملكة العربية السعودية'
       });

@@ -1,4 +1,4 @@
-# مسجدي - Masjidy Project
+# مسجدي - Masjidi Project
 
 ## Overview
 A full-stack Masjid management system for teaching Quran and Islamic sciences. Built with the MERN stack (MongoDB, Express, React, Node.js) with Tailwind CSS, Font Awesome icons, and Arabic/RTL design.
@@ -23,7 +23,7 @@ bash run.sh
 This starts: MongoDB → Express backend (port 8000) → Vite frontend (port 5000)
 
 ## Default Credentials
-- Admin: `admin@masjidy.com` / `admin123`
+- Admin: `admin@masjidi.com` / `admin123`
 - To seed admin account: visit `/login` and click "إنشاء حساب المدير"
 
 ## Project Structure

@@ -77,7 +77,7 @@ async function seedAdmin() {
     const admin = new User({
       name: 'المدير',
       username: 'admin',
-      email: 'admin@masjidy.com',
+      email: 'admin@masjidi.com',
       password: process.env.ADMIN_PASSWORD || 'admin',
       role: 'admin'
     });

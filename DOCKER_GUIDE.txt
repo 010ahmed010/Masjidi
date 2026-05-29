@@ -1,4 +1,4 @@
-مسجدي - Masjidy Docker Deployment Guide
+مسجدي - Masjidi Docker Deployment Guide
 =========================================
 
 REQUIREMENTS
@@ -22,16 +22,16 @@ BUILD THE DOCKER IMAGE
 -----------------------
 Upload your project files to the VPS, then run:
 
-    docker build -t masjidy:v1.0 .
+    docker build -t masjidi:v1.0 .
 
 To rebuild after code changes:
 
-    docker build --no-cache -t masjidy:v1.0 .
+    docker build --no-cache -t masjidi:v1.0 .
 
 
 RECOMMENDED: USE AN ENV FILE (more secure than inline flags)
 -------------------------------------------------------------
-Create a file at /etc/masjidy.env on your server (readable only by root):
+Create a file at /etc/masjidi.env on your server (readable only by root):
 
     MONGO_URI=your_mongodb_connection_string
     JWT_SECRET=your_saved_jwt_secret
@@ -41,7 +41,7 @@ Create a file at /etc/masjidy.env on your server (readable only by root):
 
 Secure the file:
 
-    chmod 600 /etc/masjidy.env
+    chmod 600 /etc/masjidi.env
 
 
 RUN THE CONTAINER
@@ -50,10 +50,10 @@ Using env file (recommended):
 
     docker run -d \
       --restart unless-stopped \
-      --env-file /etc/masjidy.env \
+      --env-file /etc/masjidi.env \
       -p 80:8000 \
-      --name masjidy \
-      masjidy:v1.0
+      --name masjidi \
+      masjidi:v1.0
 
 Using inline flags (quick testing only — secrets are visible in process list):
 
@@ -63,8 +63,8 @@ Using inline flags (quick testing only — secrets are visible in process list):
       -e MONGO_URI=your_mongodb_connection_string \
       -e JWT_SECRET=your_saved_jwt_secret \
       -e ADMIN_PASSWORD=your_admin_password \
-      --name masjidy \
-      masjidy:v1.0
+      --name masjidi \
+      masjidi:v1.0
 
 NOTE: --restart unless-stopped means the container automatically restarts
 if it crashes or the server reboots. Always include this flag in production.
@@ -115,33 +115,33 @@ NODE_ENV         - Set automatically to "production" by the Dockerfile
 USEFUL DOCKER COMMANDS
 -----------------------
 View live logs:
-    docker logs -f masjidy
+    docker logs -f masjidi
 
 View last 100 lines of logs:
-    docker logs --tail 100 masjidy
+    docker logs --tail 100 masjidi
 
 Stop the container:
-    docker stop masjidy
+    docker stop masjidi
 
 Start a stopped container (preserves env variables):
-    docker start masjidy
+    docker start masjidi
 
 Remove the container (to run a fresh one):
-    docker rm -f masjidy
+    docker rm -f masjidi
 
 Check if the container is running:
     docker ps
 
 Check resource usage:
-    docker stats masjidy
+    docker stats masjidi
 
 
 UPGRADING TO A NEW VERSION
 ----------------------------
 1. Upload the updated project files to the VPS.
 2. Build the new image:
-       docker build --no-cache -t masjidy:v1.1 .
+       docker build --no-cache -t masjidi:v1.1 .
 3. Stop and remove the old container:
-       docker rm -f masjidy
+       docker rm -f masjidi
 4. Start the new container (same env file, new image tag):
-       docker run -d --restart unless-stopped --env-file /etc/masjidy.env -p 80:8000 --name masjidy masjidy:v1.1
+       docker run -d --restart unless-stopped --env-file /etc/masjidi.env -p 80:8000 --name masjidi masjidi:v1.1

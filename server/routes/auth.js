@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { authMiddleware } = require('../middleware/auth');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'masjidy_secret_key_2024';
+const JWT_SECRET = process.env.JWT_SECRET || 'masjidi_secret_key_2024';
 
 router.post('/login', async (req, res) => {
   try {
@@ -56,7 +56,7 @@ router.post('/seed-admin', async (req, res) => {
     const admin = new User({
       name: 'المدير',
       username: 'admin',
-      email: 'admin@masjidy.com',
+      email: 'admin@masjidi.com',
       password: 'admin123',
       role: 'admin'
     });
