@@ -3,6 +3,59 @@ import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
 
+const DEFAULT_LAT = 21.4225;
+const DEFAULT_LNG = 39.8262;
+
+function buildOsmUrl(lat, lng) {
+  const delta = 0.03;
+  const bbox = `${lng - delta}%2C${lat - delta}%2C${lng + delta}%2C${lat + delta}`;
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
+
+function MapEmbed({ value }) {
+  const resolvedSrc = (() => {
+    if (!value || !value.trim()) return null;
+    const trimmed = value.trim();
+    if (trimmed.startsWith('<')) return null;
+    const coordMatch = trimmed.match(/(-?\d+\.?\d*)\s*[,،\s]\s*(-?\d+\.?\d*)/);
+    if (coordMatch) {
+      const lat = parseFloat(coordMatch[1]);
+      const lng = parseFloat(coordMatch[2]);
+      if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+        return buildOsmUrl(lat, lng);
+      }
+    }
+    const urlMatch = trimmed.match(/[?&](?:q|center|ll)=(-?\d+\.?\d*)[,،](-?\d+\.?\d*)/);
+    if (urlMatch) return buildOsmUrl(parseFloat(urlMatch[1]), parseFloat(urlMatch[2]));
+    return null;
+  })();
+
+  if (value && value.trim().startsWith('<')) {
+    return <div className="h-72" dangerouslySetInnerHTML={{ __html: value }} />;
+  }
+
+  const src = resolvedSrc || buildOsmUrl(DEFAULT_LAT, DEFAULT_LNG);
+  const isDefault = !resolvedSrc;
+
+  return (
+    <div className="h-72 relative">
+      <iframe
+        title="الموقع على الخريطة"
+        src={src}
+        className="w-full h-full border-0"
+        loading="lazy"
+        allowFullScreen
+      />
+      {isDefault && (
+        <div className="absolute bottom-2 left-2 bg-white/90 dark:bg-[#1a2d1e]/90 text-xs text-gray-500 dark:text-gray-400 px-2 py-1 rounded-lg shadow">
+          <i className="fas fa-info-circle ml-1 text-primary-500"></i>
+          موقع تجريبي — يمكن تغييره من لوحة التحكم
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ContactPage() {
   const [contact, setContact] = useState({});
 
@@ -95,16 +148,7 @@ export default function ContactPage() {
                   <i className="fas fa-map-marker-alt text-red-500 ml-2"></i>
                   الموقع على الخريطة
                 </h3>
-                {contact.mapsIframe ? (
-                  <div className="h-64" dangerouslySetInnerHTML={{ __html: contact.mapsIframe }} />
-                ) : (
-                  <div className="h-64 bg-gray-100 dark:bg-[#111f14] flex items-center justify-center">
-                    <div className="text-center text-gray-400 dark:text-gray-500">
-                      <i className="fas fa-map text-4xl mb-2"></i>
-                      <p>لم يتم إضافة الخريطة بعد</p>
-                    </div>
-                  </div>
-                )}
+                <MapEmbed value={contact.mapsIframe} />
               </div>
             </div>
           </div>
