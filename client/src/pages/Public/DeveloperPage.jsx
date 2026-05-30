@@ -48,7 +48,7 @@ export default function DeveloperPage() {
                 <div className="absolute -inset-1 bg-gradient-to-br from-gold-400/40 via-primary-600/20 to-gold-500/40 rounded-[2rem] blur-sm"></div>
                 {/* Logo card */}
                 <div
-                  className="relative w-52 h-52 sm:w-64 sm:h-64 rounded-[1.75rem] overflow-hidden border-2 border-primary-600/30 dark:border-primary-500/40 shadow-2xl shadow-primary-900/40"
+                  className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-[1.75rem] overflow-hidden border-2 border-primary-600/30 dark:border-primary-500/40 shadow-2xl shadow-primary-900/40"
                   style={{ animation: 'amjFloat 4s ease-in-out infinite' }}
                 >
                   <img
