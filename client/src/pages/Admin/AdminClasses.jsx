@@ -10,13 +10,13 @@ import imgAhadeth  from '../../assets/backgoundCourses/ahadeth.png';
 import imgSera     from '../../assets/backgoundCourses/sera.png';
 
 const COURSES = [
-  { label: '📖 القرآن الكريم',        image: imgQuran   },
-  { label: '🎙️ التجويد',              image: imgTjweed  },
-  { label: '📚 تفسير القرآن الكريم',  image: imgTfseer  },
-  { label: '🕌 العقيدة الإسلامية',    image: imgAkeada  },
-  { label: '⚖️ الفقه الإسلامي',       image: imgFkgh    },
-  { label: '📝 الأحاديث النبوية',     image: imgAhadeth },
-  { label: '🌙 السيرة النبوية',       image: imgSera    },
+  { label: 'القرآن الكريم',        image: imgQuran   },
+  { label: 'التجويد',              image: imgTjweed  },
+  { label: 'تفسير القرآن الكريم',  image: imgTfseer  },
+  { label: 'العقيدة الإسلامية',    image: imgAkeada  },
+  { label: 'الفقه الإسلامي',       image: imgFkgh    },
+  { label: 'الأحاديث النبوية',     image: imgAhadeth },
+  { label: 'السيرة النبوية',       image: imgSera    },
 ];
 
 const emptyCourse = { name: '', image: '' };
