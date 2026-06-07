@@ -37,56 +37,55 @@ export default function DeveloperPage() {
             </span>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-14">
+          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14">
 
-            {/* Floating Logo Box */}
-            <div className="flex-shrink-0 flex justify-center">
-              <div className="relative">
-                {/* Outer glow */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-primary-500/20 via-gold-500/10 to-primary-700/20 rounded-[2.5rem] blur-2xl"></div>
-                {/* Gold ring */}
-                <div className="absolute -inset-1 bg-gradient-to-br from-gold-400/40 via-primary-600/20 to-gold-500/40 rounded-[2rem] blur-sm"></div>
+            {/* Floating Logo Box — entire block animates together */}
+            <div className="flex-shrink-0 flex justify-center w-full md:w-auto">
+              <div
+                className="relative"
+                style={{ animation: 'amjFloat 4s ease-in-out infinite' }}
+              >
+                {/* Outer ambient glow */}
+                <div className="absolute -inset-6 bg-gradient-to-br from-primary-500/25 via-primary-700/10 to-primary-500/25 rounded-[3rem] blur-3xl pointer-events-none"></div>
+                {/* Inner gold ring glow */}
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-gold-400/35 via-primary-600/15 to-gold-500/35 rounded-[2rem] blur-md pointer-events-none"></div>
                 {/* Logo card */}
-                <div
-                  className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-[1.75rem] overflow-hidden border-2 border-primary-600/30 dark:border-primary-500/40 shadow-2xl shadow-primary-900/40"
-                  style={{ animation: 'amjFloat 4s ease-in-out infinite' }}
-                >
+                <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-[1.75rem] overflow-hidden border-2 border-primary-600/30 dark:border-primary-500/40 shadow-2xl shadow-primary-900/50">
                   <img
                     src={amjLogo}
                     alt="AMJ"
                     className="w-full h-full object-cover"
                   />
-                  {/* subtle inner overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-900/20 to-transparent pointer-events-none"></div>
                 </div>
-                {/* Bottom reflection */}
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-4 bg-primary-600/20 blur-xl rounded-full"></div>
+                {/* Bottom reflection — moves with float */}
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-2/3 h-5 bg-primary-500/20 blur-xl rounded-full pointer-events-none"></div>
               </div>
             </div>
 
             {/* Content */}
             <div className="flex-1 text-right w-full" dir="rtl">
-              <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm mb-1 tracking-wide uppercase">المطور</p>
-              <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
+              <p className="text-primary-600 dark:text-primary-400 font-semibold text-xs sm:text-sm mb-1 tracking-wide uppercase">المطور</p>
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2 leading-tight">
                 أحمد{' '}
                 <span className="text-primary-600 dark:text-primary-400">الجاسم</span>
               </h1>
-              <p className="text-gray-400 dark:text-gray-400 font-medium mb-5 text-sm" dir="ltr">
+              <p className="text-gray-400 dark:text-gray-400 font-medium mb-4 text-xs sm:text-sm" dir="ltr">
                 Ahmed Al-Jassem | MERN Stack Developer
               </p>
 
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 max-w-lg text-sm sm:text-base">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-5 text-sm sm:text-base">
                 مطور متكامل متخصص في{' '}
                 <span className="text-primary-600 dark:text-primary-400 font-bold">MERN Stack</span>.
                 أوظف خبرتي في اختبار اختراق الويب لتعزيز أمان تطبيقاتي البرمجية، مما يضمن بناء أنظمة محمية من الثغرات.
               </p>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-8">
+              <div className="flex flex-wrap gap-2 mb-6 sm:mb-8">
                 {['Web Pentesting', 'MERN Stack', 'Hostinger & VPS', 'Linux Daily Driver'].map(tag => (
                   <span
                     key={tag}
-                    className="px-4 py-1.5 rounded-full text-xs font-bold bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/60"
+                    className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs font-bold bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/60"
                   >
                     {tag}
                   </span>
