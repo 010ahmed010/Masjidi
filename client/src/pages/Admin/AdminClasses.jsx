@@ -1,6 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import imgQuran    from '../../assets/backgoundCourses/quranCourse.png';
+import imgTjweed   from '../../assets/backgoundCourses/tjweed.png';
+import imgTfseer   from '../../assets/backgoundCourses/tfseer.png';
+import imgAkeada   from '../../assets/backgoundCourses/akeada.png';
+import imgFkgh     from '../../assets/backgoundCourses/fkgh.png';
+import imgAhadeth  from '../../assets/backgoundCourses/ahadeth.png';
+import imgSera     from '../../assets/backgoundCourses/sera.png';
+
+const COURSES = [
+  { label: '📖 القرآن الكريم',        image: imgQuran   },
+  { label: '🎙️ التجويد',              image: imgTjweed  },
+  { label: '📚 تفسير القرآن الكريم',  image: imgTfseer  },
+  { label: '🕌 العقيدة الإسلامية',    image: imgAkeada  },
+  { label: '⚖️ الفقه الإسلامي',       image: imgFkgh    },
+  { label: '📝 الأحاديث النبوية',     image: imgAhadeth },
+  { label: '🌙 السيرة النبوية',       image: imgSera    },
+];
+
 const emptyCourse = { name: '', image: '' };
 
 export default function AdminClasses() {
@@ -54,7 +72,14 @@ export default function AdminClasses() {
   };
 
   const updateCourse = (idx, field, value) => {
-    const updated = form.courses.map((c, i) => i === idx ? { ...c, [field]: value } : c);
+    const updated = form.courses.map((c, i) => {
+      if (i !== idx) return c;
+      if (field === 'name') {
+        const match = COURSES.find(cr => cr.label === value);
+        return { ...c, name: value, image: match ? match.image : c.image };
+      }
+      return { ...c, [field]: value };
+    });
     setForm({ ...form, courses: updated });
   };
 
@@ -150,12 +175,23 @@ export default function AdminClasses() {
                         </div>
                         <div>
                           <label className={labelCls}>اسم الدورة</label>
-                          <input type="text" value={course.name} onChange={e => updateCourse(idx, 'name', e.target.value)} className={inputCls} placeholder="مثال: حفظ القرآن الكريم" />
+                          <select
+                            value={course.name}
+                            onChange={e => updateCourse(idx, 'name', e.target.value)}
+                            className={inputCls}
+                          >
+                            <option value="">-- اختر الدورة --</option>
+                            {COURSES.map(cr => (
+                              <option key={cr.label} value={cr.label}>{cr.label}</option>
+                            ))}
+                          </select>
                         </div>
-                        <div>
-                          <label className={labelCls}>رابط صورة الدورة</label>
-                          <input type="text" value={course.image} onChange={e => updateCourse(idx, 'image', e.target.value)} className={inputCls} placeholder="https://..." />
-                        </div>
+                        {course.image && (
+                          <div className="flex items-center gap-3">
+                            <img src={course.image} alt={course.name} className="w-16 h-10 object-cover rounded-lg border border-primary-200 dark:border-primary-800 shadow-sm flex-shrink-0" />
+                            <span className="text-xs text-gray-500 dark:text-gray-400">صورة الدورة (تُحدَّد تلقائياً)</span>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
