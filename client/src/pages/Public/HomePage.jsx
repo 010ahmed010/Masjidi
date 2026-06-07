@@ -142,15 +142,28 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              {/* Light image — fades out when dark mode is on */}
               <img
-                src={dark ? bgDark : bgLight}
+                src={bgLight}
                 alt="مسجدي"
                 className="w-full h-auto block"
+                style={{
+                  opacity: dark ? 0 : 1,
+                  transition: 'opacity 0.6s ease-in-out',
+                }}
+              />
+              {/* Dark image — stacked on top, fades in when dark mode is on */}
+              <img
+                src={bgDark}
+                alt="مسجدي"
+                className="w-full h-auto block absolute inset-0 w-full h-full object-cover"
+                style={{
+                  opacity: dark ? 1 : 0,
+                  transition: 'opacity 0.6s ease-in-out',
+                }}
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 px-6">
-                <p
-                  className={`text-lg sm:text-2xl font-bold text-center text-primary-800`}
-                >
+                <p className="text-lg sm:text-2xl font-bold text-center text-primary-800">
                   ﴿ خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ ﴾
                 </p>
               </div>
