@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import imgQuran    from '../../assets/backgoundCourses/quranCourse.png';
-import imgTjweed   from '../../assets/backgoundCourses/tjweed.png';
-import imgTfseer   from '../../assets/backgoundCourses/tfseer.png';
-import imgAkeada   from '../../assets/backgoundCourses/akeada.png';
-import imgFkgh     from '../../assets/backgoundCourses/fkgh.png';
-import imgAhadeth  from '../../assets/backgoundCourses/ahadeth.png';
-import imgSera     from '../../assets/backgoundCourses/sera.png';
+import imgQuran    from '../../assets/backgoundCourses/quranCourse.webp';
+import imgTjweed   from '../../assets/backgoundCourses/tjweed.webp';
+import imgTfseer   from '../../assets/backgoundCourses/tfseer.webp';
+import imgAkeada   from '../../assets/backgoundCourses/akeada.webp';
+import imgFkgh     from '../../assets/backgoundCourses/fkgh.webp';
+import imgAhadeth  from '../../assets/backgoundCourses/ahadeth.webp';
+import imgSera     from '../../assets/backgoundCourses/sera.webp';
 
 const COURSES = [
   { label: 'القرآن الكريم',        image: imgQuran   },
