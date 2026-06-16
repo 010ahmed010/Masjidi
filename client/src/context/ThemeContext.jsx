@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(() => localStorage.getItem('masjidi-theme') === 'dark');
+  const [dark, setDark] = useState(() => localStorage.getItem('masjidi-theme') !== 'light');
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
