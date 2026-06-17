@@ -6,8 +6,8 @@ import axios from "axios";
 import logoDark from "../../assets/logo/MasjidiDarkMode.png";
 import logoLight from "../../assets/logo/MasjidiDLightMode.png";
 import { useTheme } from "../../context/ThemeContext";
-import bgLight from "../../assets/background/HeorLightMode.png";
-import bgDark from "../../assets/background/HeroDarkMode.png";
+import bgLight from "../../assets/background/HeorLightMode.webp";
+import bgDark from "../../assets/background/HeroDarkMode.webp";
 
 export default function HomePage() {
   const { dark } = useTheme();
@@ -149,7 +149,7 @@ export default function HomePage() {
                 className="w-full h-auto block"
                 style={{
                   opacity: dark ? 0 : 1,
-                  transition: 'opacity 0.6s ease-in-out',
+                  transition: "opacity 0.6s ease-in-out",
                 }}
               />
               {/* Dark image — stacked on top, fades in when dark mode is on */}
@@ -159,7 +159,7 @@ export default function HomePage() {
                 className="w-full h-auto block absolute inset-0 w-full h-full object-cover"
                 style={{
                   opacity: dark ? 1 : 0,
-                  transition: 'opacity 0.6s ease-in-out',
+                  transition: "opacity 0.6s ease-in-out",
                 }}
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 px-6">
@@ -258,7 +258,10 @@ export default function HomePage() {
                       <div className="mt-4 pt-4 border-t border-gray-200 dark:border-primary-800/50 space-y-2">
                         <p className="text-sm font-bold text-primary-700 dark:text-primary-300">
                           <i className="fas fa-school ml-2 text-primary-600 dark:text-primary-400"></i>
-                          الصف: <span className="text-primary-600 dark:text-primary-200">{card.className}</span>
+                          الصف:{" "}
+                          <span className="text-primary-600 dark:text-primary-200">
+                            {card.className}
+                          </span>
                         </p>
                         {card.teacherName && (
                           <p className="text-xs text-gray-500">
@@ -417,7 +420,10 @@ export default function HomePage() {
 
       {/* Honor */}
       {honors.length > 0 && (
-        <section id="honor" className="py-20 bg-gray-50 dark:bg-[#0a1205] relative overflow-hidden">
+        <section
+          id="honor"
+          className="py-20 bg-gray-50 dark:bg-[#0a1205] relative overflow-hidden"
+        >
           {/* Decorative background glow */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gold-500/5 blur-3xl"></div>
@@ -552,13 +558,23 @@ export default function HomePage() {
         <section id="lessons" className="py-16 bg-white dark:bg-[#0d1a10]">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-10" dir="rtl">
-              <span className="text-primary-600 dark:text-primary-400 font-semibold text-sm">المناهج الدراسية</span>
-              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">خطة الدروس الأسبوعية</h2>
+              <span className="text-primary-600 dark:text-primary-400 font-semibold text-sm">
+                المناهج الدراسية
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-bold text-primary-900 dark:text-gray-100 mt-2">
+                خطة الدروس الأسبوعية
+              </h2>
               <div className="w-16 h-1 bg-primary-600 mx-auto mt-3"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8" dir="rtl">
-              {lessons.map(lesson => (
-                <div key={lesson._id} className="bg-white dark:bg-[#1a2d1e] rounded-2xl overflow-hidden shadow-md dark:shadow-black/20 border border-gray-100 dark:border-primary-900/40">
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8"
+              dir="rtl"
+            >
+              {lessons.map((lesson) => (
+                <div
+                  key={lesson._id}
+                  className="bg-white dark:bg-[#1a2d1e] rounded-2xl overflow-hidden shadow-md dark:shadow-black/20 border border-gray-100 dark:border-primary-900/40"
+                >
                   {/* Card header */}
                   <div className="px-5 py-3 bg-gradient-to-l from-primary-700 to-primary-900 flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
@@ -566,40 +582,72 @@ export default function HomePage() {
                         <i className="fas fa-chalkboard-teacher text-white text-xs"></i>
                       </div>
                       <div className="min-w-0">
-                        <p className="font-bold text-white text-sm truncate">{lesson.teacher?.name}</p>
-                        <p className="text-primary-200 text-xs truncate">{lesson.class?.name}</p>
+                        <p className="font-bold text-white text-sm truncate">
+                          {lesson.teacher?.name}
+                        </p>
+                        <p className="text-primary-200 text-xs truncate">
+                          {lesson.class?.name}
+                        </p>
                       </div>
                     </div>
                     <div className="flex-shrink-0 text-left">
-                      <p className="text-xs text-primary-300 leading-tight">آخر تحديث</p>
+                      <p className="text-xs text-primary-300 leading-tight">
+                        آخر تحديث
+                      </p>
                       <p className="text-xs text-white/80">
-                        {lesson.updatedAt ? new Date(lesson.updatedAt).toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' }) : ''}
+                        {lesson.updatedAt
+                          ? new Date(lesson.updatedAt).toLocaleDateString(
+                              "ar-SA",
+                              { month: "short", day: "numeric" },
+                            )
+                          : ""}
                       </p>
                     </div>
                   </div>
                   {/* Days preview */}
                   <div className="p-4 space-y-2">
-                    {lesson.days?.filter(d => d.topic || d.course).slice(0, 3).map((d, i) => (
-                      <div key={i} className="flex items-center gap-3">
-                        <span className="text-xs bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 px-2 py-0.5 rounded font-bold w-14 text-center flex-shrink-0">{d.day}</span>
-                        <span className="text-xs text-gray-600 dark:text-gray-300 truncate">
-                          {d.course && <span className="text-gold-600 dark:text-gold-400 font-semibold">{d.course} — </span>}
-                          {d.topic}
-                        </span>
-                      </div>
-                    ))}
-                    {(lesson.days?.filter(d => d.topic || d.course).length || 0) === 0 && (
-                      <p className="text-xs text-gray-400 dark:text-gray-500 text-center py-1">لا توجد تفاصيل مدخلة بعد</p>
+                    {lesson.days
+                      ?.filter((d) => d.topic || d.course)
+                      .slice(0, 3)
+                      .map((d, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <span className="text-xs bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 px-2 py-0.5 rounded font-bold w-14 text-center flex-shrink-0">
+                            {d.day}
+                          </span>
+                          <span className="text-xs text-gray-600 dark:text-gray-300 truncate">
+                            {d.course && (
+                              <span className="text-gold-600 dark:text-gold-400 font-semibold">
+                                {d.course} —{" "}
+                              </span>
+                            )}
+                            {d.topic}
+                          </span>
+                        </div>
+                      ))}
+                    {(lesson.days?.filter((d) => d.topic || d.course).length ||
+                      0) === 0 && (
+                      <p className="text-xs text-gray-400 dark:text-gray-500 text-center py-1">
+                        لا توجد تفاصيل مدخلة بعد
+                      </p>
                     )}
-                    {(lesson.days?.filter(d => d.topic || d.course).length || 0) > 3 && (
-                      <p className="text-xs text-primary-500 dark:text-primary-400 font-semibold">+{lesson.days.filter(d => d.topic || d.course).length - 3} أيام أخرى...</p>
+                    {(lesson.days?.filter((d) => d.topic || d.course).length ||
+                      0) > 3 && (
+                      <p className="text-xs text-primary-500 dark:text-primary-400 font-semibold">
+                        +
+                        {lesson.days.filter((d) => d.topic || d.course).length -
+                          3}{" "}
+                        أيام أخرى...
+                      </p>
                     )}
                   </div>
                 </div>
               ))}
             </div>
             <div className="text-center">
-              <Link to="/lessons" className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-7 py-3 rounded-xl font-bold transition-colors text-sm">
+              <Link
+                to="/lessons"
+                className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-800 text-white px-7 py-3 rounded-xl font-bold transition-colors text-sm"
+              >
                 <i className="fas fa-calendar-week"></i>
                 عرض جميع الخطط الأسبوعية
               </Link>
