@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import imgQuran    from '../../assets/backgroundCourses/quranCourse.webp';
-import imgTjweed   from '../../assets/backgroundCourses/tjweed.webp';
-import imgTfseer   from '../../assets/backgroundCourses/tfseer.webp';
-import imgAkeada   from '../../assets/backgroundCourses/akeada.webp';
-import imgFkgh     from '../../assets/backgroundCourses/fkgh.webp';
-import imgAhadeth  from '../../assets/backgroundCourses/ahadeth.webp';
-import imgSera     from '../../assets/backgroundCourses/sera.webp';
-
 const COURSES = [
-  { label: 'القرآن الكريم',        image: imgQuran   },
-  { label: 'التجويد',              image: imgTjweed  },
-  { label: 'تفسير القرآن الكريم',  image: imgTfseer  },
-  { label: 'العقيدة الإسلامية',    image: imgAkeada  },
-  { label: 'الفقه الإسلامي',       image: imgFkgh    },
-  { label: 'الأحاديث النبوية',     image: imgAhadeth },
-  { label: 'السيرة النبوية',       image: imgSera    },
+  { label: 'القرآن الكريم',        image: '/backgroundCourses/quranCourse.webp' },
+  { label: 'التجويد',              image: '/backgroundCourses/tjweed.webp'      },
+  { label: 'تفسير القرآن الكريم',  image: '/backgroundCourses/tfseer.webp'      },
+  { label: 'العقيدة الإسلامية',    image: '/backgroundCourses/akeada.webp'      },
+  { label: 'الفقه الإسلامي',       image: '/backgroundCourses/fkgh.webp'        },
+  { label: 'الأحاديث النبوية',     image: '/backgroundCourses/ahadeth.webp'     },
+  { label: 'السيرة النبوية',       image: '/backgroundCourses/sera.webp'        },
 ];
 
 const emptyCourse = { name: '', image: '' };
