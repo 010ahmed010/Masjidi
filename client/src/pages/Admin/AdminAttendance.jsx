@@ -48,7 +48,15 @@ export default function AdminAttendance() {
 
   const handleDeleteAll = async () => {
     setDeleting(true);
-    await axios.delete('/api/attendance/all').catch(() => {});
+    const token = localStorage.getItem('token');
+    const res = await axios.delete('/api/attendance/all', {
+      headers: { Authorization: `Bearer ${token}` }
+    }).catch(e => e.response);
+    if (!res || res.status >= 400) {
+      setDeleting(false);
+      setConfirmDelete(false);
+      return;
+    }
     const now = new Date().toISOString();
     localStorage.setItem('attendance-last-deleted', now);
     setLastDeleted(now);
