@@ -76,22 +76,72 @@ export default function TeacherHome() {
                 <i className={`fas fa-chevron-${selected?._id === s._id ? 'up' : 'down'} text-gray-400 dark:text-gray-500 text-xs`}></i>
               </div>
               {selected?._id === s._id && (
-                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-primary-900/40 grid grid-cols-2 gap-3 text-sm">
-                  {s.age && <div><span className="text-gray-500 dark:text-gray-400">العمر:</span> <span className="font-semibold dark:text-gray-200">{s.age} سنة</span></div>}
-                  {s.phone && (
-                    <div><span className="text-gray-500 dark:text-gray-400">الهاتف:</span>
-                      <a href={`tel:${s.phone}`} className="font-semibold text-primary-600 dark:text-primary-400 hover:underline mr-1" dir="ltr">{s.phone}</a>
-                    </div>
-                  )}
-                  {s.whatsapp && (
-                    <div><span className="text-gray-500 dark:text-gray-400">واتساب:</span>
-                      <a href={`https://wa.me/${s.whatsapp?.replace(/\D/g,'')}`} target="_blank" rel="noreferrer" className="font-semibold text-green-600 dark:text-green-400 hover:underline mr-1" dir="ltr">{s.whatsapp}</a>
-                    </div>
-                  )}
-                  {s.guardianName && <div><span className="text-gray-500 dark:text-gray-400">ولي الأمر:</span> <span className="font-semibold dark:text-gray-200">{s.guardianName}</span></div>}
-                  {s.guardianPhone && (
-                    <div><span className="text-gray-500 dark:text-gray-400">هاتف ولي الأمر:</span>
-                      <a href={`tel:${s.guardianPhone}`} className="font-semibold text-primary-600 dark:text-primary-400 hover:underline mr-1" dir="ltr">{s.guardianPhone}</a>
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-primary-900/40" dir="rtl">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
+                    {s.age && (
+                      <div className="bg-gray-50 dark:bg-[#0d1a10] rounded-xl p-3 flex items-center gap-2">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <i className="fas fa-birthday-cake text-blue-600 dark:text-blue-400 text-xs"></i>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">العمر</p>
+                          <p className="font-bold text-gray-800 dark:text-gray-100 text-sm">{s.age} سنة</p>
+                        </div>
+                      </div>
+                    )}
+                    {s.guardianName && (
+                      <div className="bg-gray-50 dark:bg-[#0d1a10] rounded-xl p-3 flex items-center gap-2">
+                        <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <i className="fas fa-user-shield text-purple-600 dark:text-purple-400 text-xs"></i>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">ولي الأمر</p>
+                          <p className="font-bold text-gray-800 dark:text-gray-100 text-sm truncate">{s.guardianName}</p>
+                        </div>
+                      </div>
+                    )}
+                    {s.assignedClass?.name && (
+                      <div className="bg-gray-50 dark:bg-[#0d1a10] rounded-xl p-3 flex items-center gap-2">
+                        <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <i className="fas fa-chalkboard text-primary-600 dark:text-primary-400 text-xs"></i>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">الصف</p>
+                          <p className="font-bold text-gray-800 dark:text-gray-100 text-sm truncate">{s.assignedClass.name}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Contact buttons row */}
+                  {(s.phone || s.whatsapp || s.guardianPhone) && (
+                    <div className="flex flex-wrap gap-2">
+                      {s.phone && (
+                        <a href={`tel:${s.phone}`}
+                          className="flex items-center gap-2 bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 text-primary-700 dark:text-primary-300 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors"
+                          dir="ltr">
+                          <i className="fas fa-phone"></i>
+                          <span>{s.phone}</span>
+                        </a>
+                      )}
+                      {s.guardianPhone && (
+                        <a href={`tel:${s.guardianPhone}`}
+                          className="flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                          dir="ltr">
+                          <i className="fas fa-phone-alt"></i>
+                          <span>{s.guardianPhone}</span>
+                          <span className="text-blue-400 dark:text-blue-500 font-normal" dir="rtl">(ولي الأمر)</span>
+                        </a>
+                      )}
+                      {s.whatsapp && (
+                        <a href={`https://wa.me/${s.whatsapp.replace(/\D/g,'')}`}
+                          target="_blank" rel="noreferrer"
+                          className="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors"
+                          dir="ltr">
+                          <i className="fab fa-whatsapp text-base"></i>
+                          <span>{s.whatsapp}</span>
+                        </a>
+                      )}
                     </div>
                   )}
                 </div>
