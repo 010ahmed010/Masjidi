@@ -175,14 +175,14 @@ export default function AttendancePage() {
                   <tbody>
                     {filtered.map((r, i) => (
                       <tr key={i} className="border-t dark:border-primary-900/50 hover:bg-gray-50 dark:hover:bg-primary-900/20 transition-colors">
-                        <td className="p-3 text-gray-500 dark:text-gray-400">{i + 1}</td>
-                        <td className="p-3 font-semibold text-gray-800 dark:text-gray-100">{r.student?.name || 'طالب محذوف'}</td>
-                        <td className="p-3">
+                        <td className="p-3 text-right text-gray-500 dark:text-gray-400">{i + 1}</td>
+                        <td className="p-3 text-right font-semibold text-gray-800 dark:text-gray-100">{r.student?.name || 'طالب محذوف'}</td>
+                        <td className="p-3 text-right">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColor(r.status)}`}>
                             {statusLabel(r.status)}
                           </span>
                         </td>
-                        <td className="p-3 text-gray-500 dark:text-gray-400">{r.note || '-'}</td>
+                        <td className="p-3 text-right text-gray-500 dark:text-gray-400">{r.note || '-'}</td>
                       </tr>
                     ))}
                   </tbody>

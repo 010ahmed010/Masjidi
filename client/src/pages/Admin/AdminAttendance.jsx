@@ -141,9 +141,9 @@ export default function AdminAttendance() {
                     <tbody>
                       {r.records?.map((rec, i) => (
                         <tr key={i} className="border-t dark:border-primary-900/40">
-                          <td className="p-3 font-semibold text-gray-800 dark:text-gray-100">{rec.student?.name || '-'}</td>
-                          <td className="p-3"><span className={`text-xs px-2 py-1 rounded-full font-bold ${statusColor(rec.status)}`}>{statusLabel(rec.status)}</span></td>
-                          <td className="p-3 text-gray-500 dark:text-gray-400 text-xs">{rec.note || '-'}</td>
+                          <td className="p-3 text-right font-semibold text-gray-800 dark:text-gray-100">{rec.student?.name || '-'}</td>
+                          <td className="p-3 text-right"><span className={`text-xs px-2 py-1 rounded-full font-bold ${statusColor(rec.status)}`}>{statusLabel(rec.status)}</span></td>
+                          <td className="p-3 text-right text-gray-500 dark:text-gray-400 text-xs">{rec.note || '-'}</td>
                         </tr>
                       ))}
                     </tbody>
