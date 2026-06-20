@@ -21,26 +21,44 @@ export default function AdminAttendance() {
     setLoading(true);
     setFallbackDate(null);
 
-    const params = [];
-    if (classId) params.push(`classId=${classId}`);
-    if (date) params.push(`date=${date}`);
-    const url = '/api/attendance' + (params.length ? '?' + params.join('&') : '');
-    const res = await axios.get(url).catch(() => ({ data: [] }));
-    let data = res.data || [];
-
-    if (data.length === 0 && date) {
-      const fallback = await axios.get('/api/attendance' + (classId ? `?classId=${classId}` : '')).catch(() => ({ data: [] }));
-      if (fallback.data?.length) {
-        const lastDate = new Date(fallback.data[0].date);
-        const lastDateStr = lastDate.toISOString().split('T')[0];
-        const fallbackParams = classId ? `classId=${classId}&date=${lastDateStr}` : `date=${lastDateStr}`;
-        const fallbackRes = await axios.get(`/api/attendance?${fallbackParams}`).catch(() => ({ data: [] }));
-        data = fallbackRes.data || [];
-        if (data.length) setFallbackDate(lastDate);
+    if (!classId) {
+      // ALL CLASSES: fetch all records (sorted date desc) then keep only latest per class
+      const res = await axios.get('/api/attendance').catch(() => ({ data: [] }));
+      const data = res.data || [];
+      const seen = new Set();
+      const latest = [];
+      for (const r of data) {
+        const cid = (r.class?._id || r.class || '').toString();
+        if (!seen.has(cid)) { seen.add(cid); latest.push(r); }
       }
+      setRecords(latest);
+      setLoading(false);
+      return;
     }
 
-    setRecords(data);
+    // SPECIFIC CLASS: always show exactly one record
+    if (date) {
+      // Date is set: try that exact date first
+      const res = await axios.get(`/api/attendance?classId=${classId}&date=${date}`).catch(() => ({ data: [] }));
+      let data = res.data || [];
+      if (data.length === 0) {
+        // Fallback to last recorded date for this class
+        const fallback = await axios.get(`/api/attendance?classId=${classId}`).catch(() => ({ data: [] }));
+        if (fallback.data?.length) {
+          const lastDate = new Date(fallback.data[0].date);
+          const lastDateStr = lastDate.toISOString().split('T')[0];
+          const fallbackRes = await axios.get(`/api/attendance?classId=${classId}&date=${lastDateStr}`).catch(() => ({ data: [] }));
+          data = fallbackRes.data || [];
+          if (data.length) setFallbackDate(lastDate);
+        }
+      }
+      setRecords(data.slice(0, 1));
+    } else {
+      // No date: show only the most recent record for this class
+      const res = await axios.get(`/api/attendance?classId=${classId}`).catch(() => ({ data: [] }));
+      setRecords((res.data || []).slice(0, 1));
+    }
+
     setLoading(false);
   };
 
