@@ -15,6 +15,7 @@ import AdminAttendance from './AdminAttendance';
 import AdminContact from './AdminContact';
 import AdminCertificates from './AdminCertificates';
 import AdminSettings from './AdminSettings';
+import AdminDatabase from './AdminDatabase';
 
 const navItems = [
   { path: '', icon: 'fas fa-tachometer-alt', label: 'الرئيسية' },
@@ -28,6 +29,7 @@ const navItems = [
   { path: 'contact', icon: 'fas fa-address-book', label: 'التواصل' },
   { path: 'certificates', icon: 'fas fa-certificate', label: 'الشهادات' },
   { path: 'settings', icon: 'fas fa-cog', label: 'الإعدادات' },
+  { path: 'database', icon: 'fas fa-database', label: 'قاعدة البيانات' },
 ];
 
 export default function AdminDashboard() {
@@ -185,6 +187,7 @@ export default function AdminDashboard() {
             <Route path="/contact" element={<AdminContact />} />
             <Route path="/certificates" element={<AdminCertificates />} />
             <Route path="/settings" element={<AdminSettings />} />
+            <Route path="/database" element={<AdminDatabase />} />
           </Routes>
         </main>
       </div>

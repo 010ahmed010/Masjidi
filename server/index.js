@@ -22,6 +22,7 @@ const contactRoutes = require('./routes/contact');
 const certificateRoutes = require('./routes/certificates');
 const settingsRoutes = require('./routes/settings');
 const lessonRoutes = require('./routes/lessons');
+const databaseRoutes = require('./routes/database');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
@@ -35,6 +36,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/lessons', lessonRoutes);
+app.use('/api/database', databaseRoutes);
 
 app.get('/api/developer-contact', async (req, res) => {
   try {
