@@ -166,23 +166,23 @@ export default function AttendancePage() {
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50 dark:bg-[#111f14]">
                     <tr>
-                      <th className="text-right p-3 font-semibold text-gray-700 dark:text-gray-300">#</th>
-                      <th className="text-right p-3 font-semibold text-gray-700 dark:text-gray-300">اسم الطالب</th>
-                      <th className="text-right p-3 font-semibold text-gray-700 dark:text-gray-300">الحالة</th>
-                      <th className="text-right p-3 font-semibold text-gray-700 dark:text-gray-300">ملاحظة</th>
+                      <th className="text-center p-3 font-semibold text-gray-700 dark:text-gray-300">#</th>
+                      <th className="text-center p-3 font-semibold text-gray-700 dark:text-gray-300">اسم الطالب</th>
+                      <th className="text-center p-3 font-semibold text-gray-700 dark:text-gray-300">الحالة</th>
+                      <th className="text-center p-3 font-semibold text-gray-700 dark:text-gray-300">ملاحظة</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((r, i) => (
                       <tr key={i} className="border-t dark:border-primary-900/50 hover:bg-gray-50 dark:hover:bg-primary-900/20 transition-colors">
-                        <td className="p-3 text-right text-gray-500 dark:text-gray-400">{i + 1}</td>
-                        <td className="p-3 text-right font-semibold text-gray-800 dark:text-gray-100">{r.student?.name || 'طالب محذوف'}</td>
-                        <td className="p-3 text-right">
+                        <td className="p-3 text-center text-gray-500 dark:text-gray-400">{i + 1}</td>
+                        <td className="p-3 text-center font-semibold text-gray-800 dark:text-gray-100">{r.student?.name || 'طالب محذوف'}</td>
+                        <td className="p-3 text-center">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColor(r.status)}`}>
                             {statusLabel(r.status)}
                           </span>
                         </td>
-                        <td className="p-3 text-right text-gray-500 dark:text-gray-400">{r.note || '-'}</td>
+                        <td className="p-3 text-center text-gray-500 dark:text-gray-400">{r.note || '-'}</td>
                       </tr>
                     ))}
                   </tbody>
