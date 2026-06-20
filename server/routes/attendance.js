@@ -43,7 +43,22 @@ router.get('/today-summary', async (req, res) => {
     const end = new Date(start);
     end.setDate(start.getDate() + 1);
 
-    const records = await Attendance.find({ date: { $gte: start, $lt: end } });
+    let records = await Attendance.find({ date: { $gte: start, $lt: end } });
+    let isToday = true;
+    let summaryDate = start;
+
+    if (records.length === 0) {
+      const latest = await Attendance.findOne({ date: { $lt: start } }).sort({ date: -1 });
+      if (latest) {
+        const lastDate = new Date(latest.date);
+        const lastStart = new Date(lastDate.getFullYear(), lastDate.getMonth(), lastDate.getDate());
+        const lastEnd = new Date(lastStart);
+        lastEnd.setDate(lastStart.getDate() + 1);
+        records = await Attendance.find({ date: { $gte: lastStart, $lt: lastEnd } });
+        summaryDate = lastStart;
+        isToday = false;
+      }
+    }
 
     let present = 0, absent = 0, excused = 0;
     records.forEach(att => {
@@ -54,7 +69,7 @@ router.get('/today-summary', async (req, res) => {
       });
     });
 
-    res.json({ date: start, present, absent, excused, hasData: records.length > 0 });
+    res.json({ date: summaryDate, present, absent, excused, hasData: records.length > 0, isToday });
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 

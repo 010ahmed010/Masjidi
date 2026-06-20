@@ -12,25 +12,34 @@ export default function AttendancePage() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [isRequestedDate, setIsRequestedDate] = useState(true);
 
   useEffect(() => {
     axios.get('/api/classes').then(r => setClasses(r.data)).catch(() => {});
   }, []);
 
-  const fetchAttendance = async () => {
+  useEffect(() => {
     if (!selectedClass || !selectedDate) return;
     setLoading(true);
-    try {
-      const res = await axios.get(`/api/attendance?classId=${selectedClass}&date=${selectedDate}`);
-      const found = res.data[0] || null;
-      setAttendance(found);
-      setRecords(found?.records || []);
-    } catch {}
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (selectedClass && selectedDate) fetchAttendance();
+    setIsRequestedDate(true);
+    axios.get(`/api/attendance?classId=${selectedClass}&date=${selectedDate}`)
+      .then(async res => {
+        const found = res.data[0] || null;
+        if (found) {
+          setAttendance(found);
+          setRecords(found.records || []);
+          setIsRequestedDate(true);
+        } else {
+          const latest = await axios.get(`/api/attendance?classId=${selectedClass}`)
+            .catch(() => ({ data: [] }));
+          const lastRecord = latest.data[0] || null;
+          setAttendance(lastRecord);
+          setRecords(lastRecord?.records || []);
+          setIsRequestedDate(false);
+        }
+      })
+      .catch(() => { setAttendance(null); setRecords([]); })
+      .finally(() => setLoading(false));
   }, [selectedClass, selectedDate]);
 
   const filtered = records.filter(r => {
@@ -39,12 +48,17 @@ export default function AttendancePage() {
     return nameMatch && statusMatch;
   });
 
+  const today = new Date().toISOString().split('T')[0];
+  const isToday = attendance ? new Date(attendance.date).toISOString().split('T')[0] === today : false;
+
   const statusLabel = (s) => s === 'present' ? 'حاضر' : s === 'absent' ? 'غائب' : 'معذور';
   const statusColor = (s) => s === 'present'
     ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400'
     : s === 'absent'
     ? 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400'
     : 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400';
+
+  const inputCls = "w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100";
 
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300">
@@ -60,14 +74,10 @@ export default function AttendancePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                  <i className="fas fa-chalkboard ml-1 text-primary-600"></i>اختر الفصل
+                  <i className="fas fa-chalkboard ml-1 text-primary-600"></i>اختر الصف
                 </label>
-                <select
-                  value={selectedClass}
-                  onChange={e => setSelectedClass(e.target.value)}
-                  className="w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100"
-                >
-                  <option value="">-- اختر الفصل --</option>
+                <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} className={inputCls}>
+                  <option value="">-- اختر الصف --</option>
                   {classes.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                 </select>
               </div>
@@ -75,24 +85,14 @@ export default function AttendancePage() {
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                   <i className="fas fa-calendar ml-1 text-primary-600"></i>التاريخ
                 </label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={e => setSelectedDate(e.target.value)}
-                  className="w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100"
-                />
+                <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} className={inputCls} />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
                   <i className="fas fa-search ml-1 text-primary-600"></i>بحث عن طالب
                 </label>
-                <input
-                  type="text"
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  placeholder="اسم الطالب..."
-                  className="w-full border border-gray-300 dark:border-primary-800 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-[#0d1a10] text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-600"
-                />
+                <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="اسم الطالب..."
+                  className={`${inputCls} placeholder-gray-400 dark:placeholder-gray-600`} />
               </div>
             </div>
             <div className="mt-4 flex gap-2 flex-wrap">
@@ -110,7 +110,7 @@ export default function AttendancePage() {
           {!selectedClass ? (
             <div className="text-center py-16 text-gray-400 dark:text-gray-500">
               <i className="fas fa-chalkboard-teacher text-5xl mb-4"></i>
-              <p className="text-lg">الرجاء اختيار الفصل الدراسي</p>
+              <p className="text-lg">الرجاء اختيار الصف الدراسي</p>
             </div>
           ) : loading ? (
             <div className="text-center py-16 text-primary-600">
@@ -118,29 +118,50 @@ export default function AttendancePage() {
               <p>جاري التحميل...</p>
             </div>
           ) : !attendance ? (
-            <div className="text-center py-16 text-gray-400 dark:text-gray-500">
+            <div className="text-center py-16 text-gray-400 dark:text-gray-500 bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:border dark:border-primary-900/50">
               <i className="fas fa-calendar-times text-5xl mb-4"></i>
-              <p className="text-lg">لا توجد سجلات حضور لهذا اليوم</p>
+              <p className="text-lg">لا توجد سجلات حضور لهذا الصف بعد</p>
             </div>
           ) : (
             <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden dark:border dark:border-primary-900/50">
+              {/* Date label banner — shown when displaying a fallback day */}
+              {!isRequestedDate && (
+                <div className="px-5 py-3 bg-amber-50 dark:bg-amber-900/20 border-b border-amber-200 dark:border-amber-800 flex items-center gap-2" dir="rtl">
+                  <i className="fas fa-clock text-amber-500"></i>
+                  <p className="text-sm text-amber-700 dark:text-amber-400 font-semibold">
+                    لا توجد سجلات للتاريخ المحدد — يُعرض آخر يوم مسجَّل
+                  </p>
+                </div>
+              )}
+
               <div className="p-4 border-b dark:border-primary-900/50 flex items-center justify-between flex-wrap gap-3">
                 <div>
                   <h2 className="font-bold text-primary-800 dark:text-gray-100 text-lg">{attendance.class?.name}</h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{new Date(attendance.date).toLocaleDateString('ar-SA')}</p>
                 </div>
-                <div className="flex gap-4 text-sm">
-                  <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full font-semibold">
+                <div className="flex items-center gap-3 flex-wrap">
+                  {/* Date badge */}
+                  {isToday ? (
+                    <span className="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 px-3 py-1 rounded-full font-bold">
+                      <i className="fas fa-circle ml-1" style={{fontSize:'6px', verticalAlign:'middle'}}></i>اليوم
+                    </span>
+                  ) : (
+                    <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 px-3 py-1 rounded-full font-bold">
+                      <i className="fas fa-calendar-day ml-1"></i>
+                      {new Date(attendance.date).toLocaleDateString('ar-SA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                  )}
+                  <span className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-semibold">
                     حاضر: {records.filter(r => r.status === 'present').length}
                   </span>
-                  <span className="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-1 rounded-full font-semibold">
+                  <span className="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 px-3 py-1 rounded-full text-xs font-semibold">
                     غائب: {records.filter(r => r.status === 'absent').length}
                   </span>
-                  <span className="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400 px-3 py-1 rounded-full font-semibold">
+                  <span className="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400 px-3 py-1 rounded-full text-xs font-semibold">
                     معذور: {records.filter(r => r.status === 'excused').length}
                   </span>
                 </div>
               </div>
+
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50 dark:bg-[#111f14]">

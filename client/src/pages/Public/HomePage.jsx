@@ -496,7 +496,7 @@ export default function HomePage() {
                 الحضور
               </span>
               <h2 className="text-3xl font-bold text-primary-900 dark:text-gray-100 mt-1">
-                سجل حضور اليوم
+                {todaySummary?.hasData && !todaySummary?.isToday ? 'آخر سجل حضور مسجَّل' : 'سجل حضور اليوم'}
               </h2>
             </div>
             <Link
@@ -509,13 +509,22 @@ export default function HomePage() {
           </div>
           {todaySummary && todaySummary.hasData ? (
             <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 overflow-hidden dark:border dark:border-primary-900/40">
-              <div className="p-4 bg-primary-50 dark:bg-primary-900/40 border-b dark:border-primary-900/50 flex items-center justify-between">
+              <div className="p-4 bg-primary-50 dark:bg-primary-900/40 border-b dark:border-primary-900/50 flex items-center justify-between flex-wrap gap-2">
                 <span className="font-bold text-primary-800 dark:text-gray-100">
                   ملخص جميع الصفوف
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date(todaySummary.date).toLocaleDateString("ar-SA")}
-                </span>
+                <div className="flex items-center gap-2">
+                  {todaySummary.isToday ? (
+                    <span className="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 px-3 py-1 rounded-full font-bold">
+                      <i className="fas fa-circle text-green-500 ml-1" style={{fontSize:'6px', verticalAlign:'middle'}}></i>اليوم
+                    </span>
+                  ) : (
+                    <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 px-3 py-1 rounded-full font-bold">
+                      <i className="fas fa-clock ml-1"></i>
+                      {new Date(todaySummary.date).toLocaleDateString("ar-SA", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="p-4 grid grid-cols-3 gap-4 text-center">
                 <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4">
