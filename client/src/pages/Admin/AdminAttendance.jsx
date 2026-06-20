@@ -8,6 +8,9 @@ export default function AdminAttendance() {
   const [selectedDate, setSelectedDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [fallbackDate, setFallbackDate] = useState(null);
+  const [lastDeleted, setLastDeleted] = useState(() => localStorage.getItem('attendance-last-deleted') || null);
+  const [deleting, setDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     axios.get('/api/classes').then(r => setClasses(r.data)).catch(() => {});
@@ -43,6 +46,18 @@ export default function AdminAttendance() {
 
   useEffect(() => { fetchAttendance(selectedClass, selectedDate); }, [selectedClass, selectedDate]);
 
+  const handleDeleteAll = async () => {
+    setDeleting(true);
+    await axios.delete('/api/attendance/all').catch(() => {});
+    const now = new Date().toISOString();
+    localStorage.setItem('attendance-last-deleted', now);
+    setLastDeleted(now);
+    setRecords([]);
+    setFallbackDate(null);
+    setConfirmDelete(false);
+    setDeleting(false);
+  };
+
   const today = new Date().toISOString().split('T')[0];
   const isToday = (dateStr) => new Date(dateStr).toISOString().split('T')[0] === today;
 
@@ -57,9 +72,49 @@ export default function AdminAttendance() {
 
   return (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6">
-        <i className="fas fa-clipboard-check text-primary-600 dark:text-primary-400 ml-2"></i>مراقبة الحضور والغياب
-      </h1>
+      <div className="flex items-center justify-between flex-wrap gap-3 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100">
+          <i className="fas fa-clipboard-check text-primary-600 dark:text-primary-400 ml-2"></i>مراقبة الحضور والغياب
+        </h1>
+        <div className="flex items-center gap-3 flex-wrap">
+          {lastDeleted && (
+            <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
+              <i className="fas fa-history"></i>
+              آخر حذف: {new Date(lastDeleted).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            </span>
+          )}
+          <button onClick={() => setConfirmDelete(true)}
+            className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors">
+            <i className="fas fa-trash-alt"></i>
+            حذف جميع السجلات
+          </button>
+        </div>
+      </div>
+
+      {/* Confirm delete modal */}
+      {confirmDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-2xl dark:border dark:border-red-900/40 w-full max-w-sm p-6 text-center" dir="rtl">
+            <div className="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i className="fas fa-exclamation-triangle text-red-600 dark:text-red-400 text-xl"></i>
+            </div>
+            <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">تأكيد الحذف</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              سيتم حذف <span className="font-bold text-red-600 dark:text-red-400">جميع سجلات الحضور والغياب</span> نهائياً ولا يمكن التراجع عن هذا الإجراء.
+            </p>
+            <div className="flex gap-3">
+              <button onClick={() => setConfirmDelete(false)}
+                className="flex-1 bg-gray-100 dark:bg-primary-900/40 text-gray-700 dark:text-gray-300 py-2.5 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-primary-800/50 transition-colors">
+                إلغاء
+              </button>
+              <button onClick={handleDeleteAll} disabled={deleting}
+                className="flex-1 bg-red-600 text-white py-2.5 rounded-xl font-bold hover:bg-red-700 disabled:opacity-60 transition-colors">
+                {deleting ? <><i className="fas fa-spinner fa-spin ml-1"></i>جاري الحذف...</> : <><i className="fas fa-trash-alt ml-1"></i>حذف الكل</>}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 p-4 mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 dark:border dark:border-primary-900/40">
         <div>

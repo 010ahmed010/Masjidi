@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Attendance = require('../models/Attendance');
-const { authMiddleware, teacherOnly } = require('../middleware/auth');
+const { authMiddleware, teacherOnly, adminOnly } = require('../middleware/auth');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'masjidi_secret_key_2024';
 
@@ -88,6 +88,13 @@ router.post('/', authMiddleware, teacherOnly, async (req, res) => {
       await att.save();
     }
     res.json(att);
+  } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
+router.delete('/all', authMiddleware, adminOnly, async (req, res) => {
+  try {
+    const result = await Attendance.deleteMany({});
+    res.json({ message: 'تم حذف جميع سجلات الحضور', deleted: result.deletedCount });
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
