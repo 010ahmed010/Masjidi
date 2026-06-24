@@ -45,6 +45,7 @@ Description_Mirror_Method/  # Original specifications
 ```
 
 ## User Preferences
+- **Agent responses in English** (UI remains Arabic-only)
 - Arabic-only UI, RTL direction
 - Green Islamic color scheme with gold accents
 - Cairo font family
