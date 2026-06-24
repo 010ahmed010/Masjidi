@@ -7,7 +7,7 @@ router.get('/', authMiddleware, async (req, res) => {
   try {
     const teachers = await User.find({ role: 'teacher' }).select('-password').populate('assignedClasses', 'name');
     res.json(teachers);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.post('/', authMiddleware, adminOnly, async (req, res) => {
@@ -17,7 +17,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
     const t = teacher.toObject();
     delete t.password;
     res.status(201).json(t);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
@@ -31,14 +31,14 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
     }
     const teacher = await User.findByIdAndUpdate(req.params.id, data, { new: true }).select('-password');
     res.json(teacher);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;

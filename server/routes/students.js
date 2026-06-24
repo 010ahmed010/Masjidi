@@ -18,7 +18,7 @@ router.get('/', authMiddleware, async (req, res) => {
     if (status) filter.status = status;
     const students = await Student.find(filter).populate('assignedClass assignedTeacher', 'name');
     res.json(students);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.post('/', authMiddleware, adminOnly, async (req, res) => {
@@ -33,7 +33,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
       await Class.findByIdAndUpdate(req.body.assignedClass, { $addToSet: { students: student._id } });
     }
     res.status(201).json(student);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
@@ -47,7 +47,12 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
       if (cls?.teacher) req.body.assignedTeacher = cls.teacher;
     }
 
-    const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { name, age, phone, whatsapp, guardianName, guardianPhone, assignedClass, status } = req.body;
+    const student = await Student.findByIdAndUpdate(
+      req.params.id,
+      { name, age, phone, whatsapp, guardianName, guardianPhone, assignedClass, assignedTeacher: req.body.assignedTeacher, status },
+      { new: true }
+    );
 
     if (oldClassId && oldClassId !== newClassId) {
       await Class.findByIdAndUpdate(oldClassId, { $pull: { students: student._id } });
@@ -57,7 +62,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
     }
 
     res.json(student);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
@@ -68,14 +73,14 @@ router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
     }
     await Student.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.get('/count', authMiddleware, async (req, res) => {
   try {
     const count = await Student.countDocuments();
     res.json({ count });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;

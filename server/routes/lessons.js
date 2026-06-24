@@ -10,7 +10,7 @@ router.get('/public', async (req, res) => {
       .populate('teacher', 'name')
       .sort({ updatedAt: -1 });
     res.json(lessons);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.get('/', authMiddleware, async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/', authMiddleware, async (req, res) => {
       .populate('teacher', 'name')
       .sort({ updatedAt: -1 });
     res.json(lessons);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.post('/', authMiddleware, teacherOnly, async (req, res) => {
@@ -36,7 +36,7 @@ router.post('/', authMiddleware, teacherOnly, async (req, res) => {
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
     res.json(lesson);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;

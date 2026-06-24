@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
       return obj;
     }));
     res.json(result);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.post('/', authMiddleware, adminOnly, async (req, res) => {
@@ -32,7 +32,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
       await User.findByIdAndUpdate(data.teacher, { $addToSet: { assignedClasses: cls._id } });
     }
     res.status(201).json(cls);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
@@ -54,7 +54,7 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
     }
 
     res.json(cls);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
@@ -66,7 +66,7 @@ router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
     await Lesson.deleteMany({ class: req.params.id });
     await Class.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;

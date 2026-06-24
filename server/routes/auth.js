@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { authMiddleware } = require('../middleware/auth');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'masjidi_secret_key_2024';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) { console.error('FATAL: JWT_SECRET env var is not set'); process.exit(1); }
 
 router.post('/login', async (req, res) => {
   try {
@@ -16,7 +17,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
     res.json({ token, user: { id: user._id, name: user.name, username: user.username, role: user.role } });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'حدث خطأ في الخادم' });
   }
 });
 
@@ -25,7 +26,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'حدث خطأ في الخادم' });
   }
 });
 
@@ -34,7 +35,7 @@ router.put('/change-password', authMiddleware, async (req, res) => {
     if (req.user.role !== 'admin') return res.status(403).json({ message: 'غير مصرح' });
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword) return res.status(400).json({ message: 'يرجى تعبئة جميع الحقول' });
-    if (newPassword.length < 4) return res.status(400).json({ message: 'كلمة المرور الجديدة يجب أن تكون 4 أحرف على الأقل' });
+    if (newPassword.length < 6) return res.status(400).json({ message: 'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل' });
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'المستخدم غير موجود' });
     const match = await user.comparePassword(currentPassword);
@@ -43,27 +44,7 @@ router.put('/change-password', authMiddleware, async (req, res) => {
     await user.save();
     res.json({ message: 'تم تغيير كلمة المرور بنجاح' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-router.post('/seed-admin', async (req, res) => {
-  try {
-    let existing = await User.findOne({ username: 'admin' });
-    if (existing) {
-      return res.json({ message: 'Admin already exists', username: 'admin', password: 'admin123' });
-    }
-    const admin = new User({
-      name: 'المدير',
-      username: 'admin',
-      email: 'admin@masjidi.com',
-      password: 'admin123',
-      role: 'admin'
-    });
-    await admin.save();
-    res.json({ message: 'Admin created', username: 'admin', password: 'admin123' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'حدث خطأ في الخادم' });
   }
 });
 

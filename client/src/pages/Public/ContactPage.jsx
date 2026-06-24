@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 
 const DEFAULT_LAT = 21.4225;
 const DEFAULT_LNG = 39.8262;
@@ -31,7 +32,7 @@ function MapEmbed({ value }) {
   })();
 
   if (value && value.trim().startsWith('<')) {
-    return <div className="h-72" dangerouslySetInnerHTML={{ __html: value }} />;
+    return <div className="h-72" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value, { ADD_TAGS: ['iframe'], ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'src'] }) }} />;
   }
 
   const src = resolvedSrc || buildOsmUrl(DEFAULT_LAT, DEFAULT_LNG);

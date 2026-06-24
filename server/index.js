@@ -4,10 +4,20 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 
+const rateLimit = require('express-rate-limit');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { message: 'عدد محاولات تسجيل الدخول تجاوز الحد المسموح، حاول بعد 15 دقيقة' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/auth/login', loginLimiter);
 app.use('/uploads', express.static('uploads'));
 
 const authRoutes = require('./routes/auth');

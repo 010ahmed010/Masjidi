@@ -60,7 +60,7 @@ router.get('/stats', authMiddleware, adminOnly, async (req, res) => {
       collectionDetails: collections,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'حدث خطأ في الخادم' });
   }
 });
 

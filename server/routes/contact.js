@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
       await contact.save();
     }
     res.json(contact);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.put('/', authMiddleware, adminOnly, async (req, res) => {
@@ -30,7 +30,7 @@ router.put('/', authMiddleware, adminOnly, async (req, res) => {
     }
     await contact.save();
     res.json(contact);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;

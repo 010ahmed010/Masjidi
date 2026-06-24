@@ -13,29 +13,35 @@ router.get('/', async (req, res) => {
       .populate('class', 'name')
       .sort({ createdAt: -1 });
     res.json(honors);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.post('/', authMiddleware, teacherOnly, async (req, res) => {
   try {
-    const honor = new Honor({ ...req.body, teacher: req.user.id });
+    const { student, class: cls, reason, weekStart } = req.body;
+    const honor = new Honor({ student, class: cls, reason, weekStart, teacher: req.user.id });
     await honor.save();
     res.status(201).json(honor);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
-    const honor = await Honor.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { status, adminNote } = req.body;
+    const honor = await Honor.findByIdAndUpdate(
+      req.params.id,
+      { status, adminNote },
+      { new: true }
+    );
     res.json(honor);
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
     await Honor.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
-  } catch (err) { res.status(500).json({ message: err.message }); }
+  } catch (err) { res.status(500).json({ message: 'حدث خطأ في الخادم' }); }
 });
 
 module.exports = router;
