@@ -18,6 +18,7 @@ export default function HomePage() {
   const [contact, setContact] = useState({});
   const [todaySummary, setTodaySummary] = useState(null);
   const [lessons, setLessons] = useState([]);
+  const [masjidName, setMasjidName] = useState('');
 
   useEffect(() => {
     axios
@@ -48,6 +49,10 @@ export default function HomePage() {
       .get("/api/lessons/public")
       .then((r) => setLessons(r.data.slice(0, 4)))
       .catch(() => {});
+    axios
+      .get("/api/settings")
+      .then((r) => { if (r.data?.siteName) setMasjidName(r.data.siteName); })
+      .catch(() => {});
   }, []);
 
   return (
@@ -66,8 +71,8 @@ export default function HomePage() {
         </div>
         <div className="max-w-7xl mx-auto px-4 text-center text-white relative z-10 py-20">
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-6 text-sm">
-            <i className="fas fa-star text-gold-400"></i>
-            <span>معهد متخصص في تعليم القرآن الكريم</span>
+            <i className="fas fa-mosque text-gold-400"></i>
+            <span>{masjidName || 'معهد متخصص في تعليم القرآن الكريم'}</span>
           </div>
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight">
             مرحباً بكم في

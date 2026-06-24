@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function AdminSettings() {
-  const [form, setForm] = useState({ registrationOpen: true, siteName: 'مسجدي', siteDescription: '', footerText: '', logoUrl: '' });
+  const [form, setForm] = useState({ registrationOpen: true, siteName: '', siteDescription: '', footerText: '' });
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -53,8 +53,9 @@ export default function AdminSettings() {
             <h2 className="font-bold text-gray-700 dark:text-gray-200 text-lg border-b dark:border-primary-900/40 pb-2">إعدادات الموقع</h2>
 
             <div>
-              <label className={labelCls}>اسم الموقع</label>
-              <input type="text" value={form.siteName || ''} onChange={e => setForm({...form, siteName: e.target.value})} className={inputCls} />
+              <label className={labelCls}>اسم المسجد</label>
+              <input type="text" value={form.siteName || ''} onChange={e => setForm({...form, siteName: e.target.value})} className={inputCls} placeholder="مثال: مسجد النور، جامع الإيمان..." />
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">يظهر في الصفحة الرئيسية كعنوان المسجد المضيف للمنصة</p>
             </div>
             <div>
               <label className={labelCls}>وصف الموقع</label>
@@ -63,10 +64,6 @@ export default function AdminSettings() {
             <div>
               <label className={labelCls}>نص الفوتر</label>
               <input type="text" value={form.footerText || ''} onChange={e => setForm({...form, footerText: e.target.value})} className={inputCls} />
-            </div>
-            <div>
-              <label className={labelCls}>رابط الشعار</label>
-              <input type="text" value={form.logoUrl || ''} onChange={e => setForm({...form, logoUrl: e.target.value})} className={inputCls} />
             </div>
 
             <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/50 rounded-xl p-4">
