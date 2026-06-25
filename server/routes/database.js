@@ -16,22 +16,11 @@ router.get('/stats', authMiddleware, adminOnly, async (req, res) => {
     const collectionNames = await db.listCollections().toArray();
     const collections = await Promise.all(
       collectionNames.map(async (col) => {
-        try {
-          const stats = await db.collection(col.name).stats({ scale: 1 });
-          return {
-            name: col.name,
-            count: stats.count || 0,
-            dataSize: stats.size || 0,
-            storageSize: stats.storageSize || 0,
-            indexSize: stats.totalIndexSize || 0,
-            avgObjSize: stats.avgObjSize || 0,
-          };
-        } catch {
-          return { name: col.name, count: 0, dataSize: 0, storageSize: 0, indexSize: 0, avgObjSize: 0 };
-        }
+        const count = await db.collection(col.name).countDocuments().catch(() => 0);
+        return { name: col.name, count };
       })
     );
-    collections.sort((a, b) => b.storageSize - a.storageSize);
+    collections.sort((a, b) => b.count - a.count);
 
     const FREE_TIER_LIMIT = 512 * 1024 * 1024; // 512 MB in bytes
 

@@ -268,16 +268,14 @@ export default function AdminDatabase() {
                 <thead className="bg-gray-50 dark:bg-[#111f14]">
                   <tr>
                     <th className="text-right p-3 font-semibold text-gray-600 dark:text-gray-300 pr-5">المجموعة</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">السجلات</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">الحجم</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">التخزين</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">الفهارس</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">الحصة</th>
+                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">عدد السجلات</th>
+                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">النسبة من الإجمالي</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stats.collectionDetails.map((col, i) => {
-                    const colPct = stats.storageSize > 0 ? ((col.storageSize / stats.storageSize) * 100).toFixed(1) : 0;
+                    const totalDocs = stats.objects || 1;
+                    const colPct = totalDocs > 0 ? ((col.count / totalDocs) * 100).toFixed(1) : 0;
                     return (
                       <tr key={col.name} className={`border-t dark:border-primary-900/40 hover:bg-gray-50 dark:hover:bg-primary-900/20 transition-colors ${i % 2 === 1 ? 'bg-gray-50/40 dark:bg-[#152318]/30' : ''}`}>
                         <td className="p-3 pr-5">
@@ -291,16 +289,13 @@ export default function AdminDatabase() {
                             </div>
                           </div>
                         </td>
-                        <td className="p-3 text-center font-bold text-gray-700 dark:text-gray-200">{col.count.toLocaleString('ar-SA')}</td>
-                        <td className="p-3 text-center text-gray-500 dark:text-gray-400 font-mono text-xs">{fmtBytes(col.dataSize)}</td>
-                        <td className="p-3 text-center text-gray-500 dark:text-gray-400 font-mono text-xs">{fmtBytes(col.storageSize)}</td>
-                        <td className="p-3 text-center text-gray-500 dark:text-gray-400 font-mono text-xs">{fmtBytes(col.indexSize)}</td>
+                        <td className="p-3 text-center font-bold text-gray-700 dark:text-gray-200 text-base">{col.count.toLocaleString('ar-SA')}</td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">
                             <div className="flex-1 h-1.5 bg-gray-100 dark:bg-primary-900/30 rounded-full overflow-hidden">
                               <div className="h-full bg-primary-500 rounded-full" style={{ width: `${colPct}%` }}></div>
                             </div>
-                            <span className="text-xs text-gray-400 dark:text-gray-500 w-8 text-left">{colPct}%</span>
+                            <span className="text-xs text-gray-400 dark:text-gray-500 w-10 text-left">{colPct}%</span>
                           </div>
                         </td>
                       </tr>
