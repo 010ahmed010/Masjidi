@@ -49,4 +49,3 @@ run = ["bash", "run.sh"]
 [userenv]
 
 [userenv.shared]
-JWT_SECRET = "c3441326a2f6f7b0fc6f63c4c3fc910f2bc73272846f28d8f19f728c380f5eb6806892b0c47da4cdf0e0798cd6ffef98"
