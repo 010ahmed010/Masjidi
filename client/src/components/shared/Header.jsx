@@ -104,7 +104,7 @@ export default function Header() {
               <i className={`fas ${dark ? 'fa-sun' : 'fa-moon'} text-sm`}></i>
             </button>
 
-            {settings.registrationOpen && !user && (
+            {settings.registrationOpen && (
               <span className="bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-400 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
                 <i className="fas fa-circle text-green-500 ml-1 text-[8px]"></i>
                 التسجيل مفتوح
@@ -221,6 +221,12 @@ export default function Header() {
           </div>
 
           <div className="border-t dark:border-primary-900 mt-2 pt-3 flex flex-col gap-2">
+            {settings.registrationOpen && (
+              <span className="bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-400 text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-2">
+                <i className="fas fa-circle text-green-500 text-[8px] animate-pulse"></i>
+                التسجيل مفتوح
+              </span>
+            )}
             {user ? (
               <>
                 <div className="flex items-center gap-2 px-2 py-1 bg-primary-50 dark:bg-primary-900/40 rounded-lg">
