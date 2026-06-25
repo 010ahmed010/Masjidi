@@ -51,3 +51,7 @@ run = ["bash", "run.sh"]
 [userenv.shared]
 MONGO_URI = "mongodb+srv://myvibecoding10_db_user:KB3cVZ6XBOJJRC1u@cluster0.wd8mbrw.mongodb.net/?appName=Cluster0"
 JWT_SECRET = "61ad8e033f071cd72362d3fe3764a4b8d45301ed62ffa44e387c2d2ad751ea7800a16c53de07705ff890ad5036dee8535041115f6e4262e14352c05823a89612"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 120000
