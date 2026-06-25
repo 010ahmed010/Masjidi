@@ -179,7 +179,7 @@ export default function AdminDatabase() {
               icon="fas fa-file-alt"
               iconBg="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
               label="إجمالي السجلات"
-              main={stats.objects?.toLocaleString('ar-SA') ?? '—'}
+              main={stats.objects ?? '—'}
               sub={`في ${stats.collections} مجموعة`}
             />
             <MetricCard
@@ -210,7 +210,7 @@ export default function AdminDatabase() {
                     {[
                       { label: 'البيانات الواردة', value: fmtBytes(stats.network.bytesIn), icon: 'fas fa-arrow-down', color: 'text-green-600 dark:text-green-400' },
                       { label: 'البيانات الصادرة', value: fmtBytes(stats.network.bytesOut), icon: 'fas fa-arrow-up', color: 'text-blue-600 dark:text-blue-400' },
-                      { label: 'إجمالي الطلبات', value: (stats.network.numRequests ?? '—').toLocaleString?.('ar-SA') ?? stats.network.numRequests, icon: 'fas fa-exchange-alt', color: 'text-purple-600 dark:text-purple-400' },
+                      { label: 'إجمالي الطلبات', value: stats.network.numRequests ?? '—', icon: 'fas fa-exchange-alt', color: 'text-purple-600 dark:text-purple-400' },
                     ].map(r => (
                       <div key={r.label} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-primary-900/30 last:border-0">
                         <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export default function AdminDatabase() {
                         <div key={r.label}>
                           <div className="flex justify-between text-xs mb-1">
                             <span className="text-gray-600 dark:text-gray-300">{r.label}</span>
-                            <span className="font-bold text-gray-700 dark:text-gray-200">{(r.value ?? 0).toLocaleString('ar-SA')}</span>
+                            <span className="font-bold text-gray-700 dark:text-gray-200">{r.value ?? 0}</span>
                           </div>
                           <div className="w-full h-1.5 bg-gray-100 dark:bg-primary-900/30 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${r.color}`} style={{ width: `${pct}%` }}></div>
@@ -289,7 +289,7 @@ export default function AdminDatabase() {
                             </div>
                           </div>
                         </td>
-                        <td className="p-3 text-center font-bold text-gray-700 dark:text-gray-200 text-base">{col.count.toLocaleString('ar-SA')}</td>
+                        <td className="p-3 text-center font-bold text-gray-700 dark:text-gray-200 text-base">{col.count}</td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">
                             <div className="flex-1 h-1.5 bg-gray-100 dark:bg-primary-900/30 rounded-full overflow-hidden">
