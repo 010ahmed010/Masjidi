@@ -255,56 +255,6 @@ export default function AdminDatabase() {
               )}
             </div>
           )}
-
-          {/* ═══ COLLECTIONS TABLE ═══ */}
-          <div className="bg-white dark:bg-[#1a2d1e] rounded-2xl shadow-md dark:shadow-black/30 dark:border dark:border-primary-900/40 overflow-hidden">
-            <div className="p-5 border-b border-gray-100 dark:border-primary-900/40 flex items-center gap-2">
-              <i className="fas fa-table text-primary-500"></i>
-              <h2 className="font-bold text-gray-700 dark:text-gray-200">تفاصيل المجموعات</h2>
-              <span className="mr-auto text-xs text-gray-400 dark:text-gray-500">{stats.collections} مجموعة</span>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-50 dark:bg-[#111f14]">
-                  <tr>
-                    <th className="text-right p-3 font-semibold text-gray-600 dark:text-gray-300 pr-5">المجموعة</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">عدد السجلات</th>
-                    <th className="text-center p-3 font-semibold text-gray-600 dark:text-gray-300">النسبة من الإجمالي</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stats.collectionDetails.map((col, i) => {
-                    const totalDocs = stats.objects || 1;
-                    const colPct = totalDocs > 0 ? ((col.count / totalDocs) * 100).toFixed(1) : 0;
-                    return (
-                      <tr key={col.name} className={`border-t dark:border-primary-900/40 hover:bg-gray-50 dark:hover:bg-primary-900/20 transition-colors ${i % 2 === 1 ? 'bg-gray-50/40 dark:bg-[#152318]/30' : ''}`}>
-                        <td className="p-3 pr-5">
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-8 h-8 bg-primary-100 dark:bg-primary-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <i className={`${collectionIcon[col.name] || 'fas fa-database'} text-primary-600 dark:text-primary-400 text-xs`}></i>
-                            </div>
-                            <div>
-                              <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{collectionArabic[col.name] || col.name}</p>
-                              <p className="text-xs text-gray-400 dark:text-gray-500 font-mono">{col.name}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="p-3 text-center font-bold text-gray-700 dark:text-gray-200 text-base">{col.count}</td>
-                        <td className="p-3">
-                          <div className="flex items-center gap-2">
-                            <div className="flex-1 h-1.5 bg-gray-100 dark:bg-primary-900/30 rounded-full overflow-hidden">
-                              <div className="h-full bg-primary-500 rounded-full" style={{ width: `${colPct}%` }}></div>
-                            </div>
-                            <span className="text-xs text-gray-400 dark:text-gray-500 w-10 text-left">{colPct}%</span>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </>
       )}
     </div>

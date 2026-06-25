@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -13,6 +13,11 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    usernameRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +54,7 @@ export default function LoginPage() {
             <div className="relative">
               <i className="fas fa-user absolute right-3 top-3 text-gray-400 dark:text-gray-500"></i>
               <input
+                ref={usernameRef}
                 type="text"
                 value={form.username}
                 onChange={e => setForm({...form, username: e.target.value})}
