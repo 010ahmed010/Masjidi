@@ -1,0 +1,39 @@
+sudo docker build -t 010ahmed010/masjidi:v1.0 .
+[+] Building 82.3s (11/16)                                                                                                             docker:default
+ => [internal] load build definition from Dockerfile                                                                                             0.0s
+ => => transferring dockerfile: 505B                                                                                                             0.0s
+ => [internal] load metadata for docker.io/library/node:22-alpine                                                                                2.9s
+ => [auth] library/node:pull token for registry-1.docker.io                                                                                      0.0s
+ => [internal] load .dockerignore                                                                                                                0.0s
+ => => transferring context: 2B                                                                                                                  0.0s
+ => [internal] load build context                                                                                                                0.0s
+ => => transferring context: 4.87kB                                                                                                              0.0s
+ => [builder 1/6] FROM docker.io/library/node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2                  0.0s
+ => => resolve docker.io/library/node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2                          0.0s
+ => CACHED [builder 2/6] WORKDIR /app                                                                                                            0.0s
+ => CACHED [production 3/7] COPY server/package*.json ./server/                                                                                  0.0s
+ => CACHED [builder 3/6] COPY client/package*.json ./client/                                                                                     0.0s
+ => ERROR [production 4/7] RUN cd server && npm install --omit=dev                                                                              79.0s
+ => CANCELED [builder 4/6] RUN cd client && npm install                                                                                         79.1s
+------                                                                                                                                                
+ > [production 4/7] RUN cd server && npm install --omit=dev:                                                                                          
+78.85 npm notice                                                                                                                                      
+78.85 npm notice New major version of npm available! 10.9.8 -> 11.17.0                                                                                
+78.85 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.17.0                                                                          
+78.85 npm notice To update run: npm install -g npm@11.17.0                                                                                            
+78.85 npm notice
+78.85 npm error Exit handler never called!
+78.85 npm error This is an error with npm itself. Please report this error at:
+78.85 npm error   <https://github.com/npm/cli/issues>
+78.85 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-06-26T06_36_00_893Z-debug-0.log
+------
+WARNING: current commit information was not captured by the build: failed to read current commit information with git rev-parse --is-inside-work-tree
+Dockerfile:16
+--------------------
+  14 |     
+  15 |     COPY server/package*.json ./server/
+  16 | >>> RUN cd server && npm install --omit=dev
+  17 |     
+  18 |     COPY server/ ./server/
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c cd server && npm install --omit=dev" did not complete successfully: exit code: 1
