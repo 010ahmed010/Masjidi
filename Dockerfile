@@ -1,5 +1,7 @@
 FROM node:22-alpine AS builder
 
+RUN npm install -g npm@latest
+
 WORKDIR /app
 
 COPY client/package*.json ./client/
@@ -9,6 +11,8 @@ COPY client/ ./client/
 RUN cd client && npm run build
 
 FROM node:22-alpine AS production
+
+RUN npm install -g npm@latest
 
 WORKDIR /app
 
